@@ -29,7 +29,8 @@ header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdro
 .nav .links{display:flex;gap:22px;align-items:center}
 .nav .links a{text-decoration:none;color:var(--ink);font-weight:600;font-size:14px}
 .nav .links a:hover{color:var(--orange)}
-@media(max-width:760px){.nav .links a:not(.cta){display:none}}
+.nav .links .support-link{display:inline-flex;align-items:center;gap:6px}
+@media(max-width:760px){.nav .links{gap:10px}.nav .links a:not(.cta):not(.support-link){display:none}.nav .links .support-link{font-size:13px}.nav a.cta{padding:9px 14px}}
 
 /* hero */
 .hero{position:relative;color:#fff;overflow:hidden}
@@ -92,6 +93,8 @@ section.block{padding:66px 0}
 .selbtn:hover{background:var(--orange);color:#fff}
 .selbtn.soon{border-color:var(--line);color:var(--muted);background:#f6f4fb}
 .selbtn.active{background:var(--orange);color:#fff}
+.details-btn{border:0;background:transparent;color:var(--purple);font-weight:800;font-size:13px;padding:9px 4px;cursor:pointer}.details-btn:hover{text-decoration:underline}
+.card.selected{border-color:var(--orange);box-shadow:0 10px 30px rgba(240,78,35,.18)}
 .rate-note{margin-top:24px;padding:14px 18px;border-left:4px solid var(--orange);background:#fff;border-radius:8px;color:var(--muted);font-size:13px}
 
 /* form */
@@ -117,6 +120,28 @@ section.block{padding:66px 0}
 .side li b{color:var(--ink)}
 .dot{flex:0 0 auto;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,rgba(240,78,35,.14),rgba(58,26,107,.12));display:grid;place-items:center;color:var(--orange);font-weight:900}
 .selected-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(240,78,35,.1);color:var(--orange);font-weight:800;padding:8px 14px;border-radius:20px;font-size:13px;margin-top:8px}
+.selection-panel{border:1.5px solid var(--line);border-radius:14px;background:#fdfcff;overflow:hidden}.selection-empty{padding:18px;color:var(--muted);font-size:14px}.selection-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:13px 15px;border-bottom:1px solid var(--line)}.selection-row:last-child{border-bottom:0}.selection-row b{display:block;font-size:13px}.selection-row small{color:var(--muted)}.remove-activity{border:0;background:#fff1eb;color:#a53516;border-radius:18px;padding:6px 10px;font-weight:800;cursor:pointer}.remove-activity:disabled{background:#f2eff7;color:var(--muted);cursor:default}
+.selection-totals{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.selection-total{background:#f5f1fc;border-radius:11px;padding:10px;text-align:center}.selection-total b{display:block;color:var(--purple);font-size:15px}.selection-total span{font-size:10px;text-transform:uppercase;color:var(--muted);font-weight:800}
+.trip-bar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(140%);z-index:70;width:min(760px,calc(100vw - 28px));background:var(--purple-2);color:#fff;border-radius:18px;padding:12px 14px 12px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 18px 50px rgba(15,8,32,.35);transition:transform .3s}.trip-bar.show{transform:translateX(-50%) translateY(0)}.trip-bar-copy{font-size:13px}.trip-bar-copy b{font-size:15px}.trip-bar .btn{padding:10px 16px;font-size:13px;white-space:nowrap}
+@media(max-width:600px){.selection-totals{grid-template-columns:1fr}.trip-bar{align-items:flex-start}.trip-bar-copy span{display:block}.trip-bar .btn{padding:9px 12px}}
+
+/* support contacts */
+.support-block{background:linear-gradient(180deg,#fff 0%,#f7f3fc 100%);border-top:1px solid var(--line)}
+.support-head{display:flex;align-items:end;justify-content:space-between;gap:24px}
+.support-hint{display:inline-flex;align-items:center;gap:8px;flex:0 0 auto;background:#fff;border:1px solid var(--line);border-radius:24px;padding:9px 14px;color:var(--purple);font-size:12px;font-weight:800;box-shadow:0 8px 20px rgba(36,19,68,.07)}
+.support-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;margin-top:32px}
+.support-card{position:relative;display:flex;flex-direction:column;align-items:center;min-height:260px;padding:24px 16px 18px;background:#fff;border:1px solid var(--line);border-radius:18px;text-align:center;text-decoration:none;box-shadow:0 8px 26px rgba(36,19,68,.07);transition:transform .22s,box-shadow .22s,border-color .22s}
+.support-card:hover{transform:translateY(-5px);border-color:rgba(240,78,35,.45);box-shadow:var(--shadow)}
+.support-card:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.profile-thumb{width:92px;height:92px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:linear-gradient(135deg,var(--purple),var(--orange));color:#fff;font-size:26px;font-weight:900;letter-spacing:.5px;border:4px solid #fff;box-shadow:0 0 0 2px var(--line),0 12px 28px rgba(36,19,68,.18)}
+.profile-thumb img{width:100%;height:100%;object-fit:cover}
+.support-card h3{margin:16px 0 4px;font-size:16px;line-height:1.25}
+.support-role{min-height:38px;color:var(--muted);font-size:12.5px;font-weight:700;line-height:1.35}
+.support-phone{margin-top:auto;padding-top:15px;color:var(--purple);font-size:12px;font-weight:800}
+.whatsapp-action{display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:8px 12px;border-radius:20px;background:#fff1eb;color:#a53516;font-size:12px;font-weight:900}
+@media(max-width:980px){.support-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:680px){.support-head{align-items:flex-start;flex-direction:column}.support-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:440px){.support-grid{grid-template-columns:1fr}.support-card{min-height:0}.support-role{min-height:0}}
 
 /* footer */
 footer{background:var(--purple-2);color:#d9cff2;padding:44px 0 30px;margin-top:20px}
@@ -160,6 +185,7 @@ th{background:#f3effb;font-size:12px;text-transform:uppercase;letter-spacing:.4p
     <nav class="links">
       <a href="#album">Excursions</a>
       <a href="#register">Register</a>
+      <a href="#support" class="support-link" aria-label="Contact trip support">Support</a>
       <a href="#register" class="cta">Join the journey</a>
     </nav>
   </div>
@@ -244,11 +270,14 @@ th{background:#f3effb;font-size:12px;text-transform:uppercase;letter-spacing:.4p
               <input name="chapter" value="PMI Uganda Chapter" />
             </div>
             <div class="field">
-              <label>Excursion <span class="req">*</span></label>
-              <select name="excursion" id="excursionSelect" required>
-                <option value="">Choose an excursion</option>
-              </select>
+              <label>Selected activities <span class="req">*</span></label>
+              <div class="selected-pill" id="selPill">★ 1 group activity selected</div>
             </div>
+          </div>
+          <div class="field">
+            <label>Your Cape Town activity plan</label>
+            <div class="selection-panel" id="selectionPanel"></div>
+            <div class="selection-totals" id="selectionTotals"></div>
           </div>
           <div class="field">
             <label>Anything else we should know? (optional)</label>
@@ -266,8 +295,64 @@ th{background:#f3effb;font-size:12px;text-transform:uppercase;letter-spacing:.4p
           <li><span class="dot">2</span><div><b>Itinerary & costs</b><br/><small>Full excursion details and pricing shared with registrants first.</small></div></li>
           <li><span class="dot">3</span><div><b>Secure your place</b><br/><small>Deposit and travel documents guidance to follow.</small></div></li>
         </ul>
-        <div class="selected-pill" id="selPill">★ Select an excursion from the album</div>
+        <div style="margin-top:14px;color:var(--muted);font-size:13px">Choose several activities from the album. Your combined cost is calculated before you register.</div>
       </aside>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPORT -->
+<section class="block support-block" id="support" aria-labelledby="supportTitle">
+  <div class="wrap">
+    <div class="support-head">
+      <div>
+        <span class="eyebrow">Trip support</span>
+        <h2 class="h2" id="supportTitle">Need help? Message the team.</h2>
+        <p class="sub">Tap any profile to open a private WhatsApp chat with the right person for your question.</p>
+      </div>
+      <div class="support-hint" aria-hidden="true">WhatsApp opens on your device</div>
+    </div>
+
+    <div class="support-grid">
+      <a class="support-card" href="https://wa.me/256775935120" target="_blank" rel="noopener noreferrer" aria-label="Message Eng. Diana Nakabugo, Project Manager, on WhatsApp">
+        <span class="profile-thumb"><img src="Profile%20Pics/Eng.%20Diana%20Nakabugo.jpeg" alt="Eng. Diana Nakabugo" loading="lazy" /></span>
+        <h3>Eng. Diana Nakabugo</h3>
+        <span class="support-role">Project Manager</span>
+        <span class="support-phone">+256 775 935 120</span>
+        <span class="whatsapp-action">Chat on WhatsApp <span aria-hidden="true">&rarr;</span></span>
+      </a>
+
+      <a class="support-card" href="https://wa.me/256777293933" target="_blank" rel="noopener noreferrer" aria-label="Message Christopher Sabiti, Communications Lead, on WhatsApp">
+        <span class="profile-thumb"><img src="Profile%20Pics/Christopher%20Sabiti.png" alt="Christopher Sabiti" loading="lazy" /></span>
+        <h3>Christopher Sabiti</h3>
+        <span class="support-role">Communications Lead</span>
+        <span class="support-phone">+256 777 293 933</span>
+        <span class="whatsapp-action">Chat on WhatsApp <span aria-hidden="true">&rarr;</span></span>
+      </a>
+
+      <a class="support-card" href="https://wa.me/256774264528" target="_blank" rel="noopener noreferrer" aria-label="Message Shakirah Nakiyingi, Excursion GSSA26 Lead, on WhatsApp">
+        <span class="profile-thumb"><img src="Profile%20Pics/Shakirah%20Nakiyingi.jpeg" alt="Shakirah Nakiyingi" loading="lazy" /></span>
+        <h3>Shakirah Nakiyingi</h3>
+        <span class="support-role">Excursion GSSA26 Lead</span>
+        <span class="support-phone">+256 774 264 528</span>
+        <span class="whatsapp-action">Chat on WhatsApp <span aria-hidden="true">&rarr;</span></span>
+      </a>
+
+      <a class="support-card" href="https://wa.me/256782635445" target="_blank" rel="noopener noreferrer" aria-label="Message Rwamwiza Innocent, VP PMI-U, on WhatsApp">
+        <span class="profile-thumb"><img src="Profile%20Pics/Rwamwiza%20innocent.png" alt="Rwamwiza Innocent" loading="lazy" /></span>
+        <h3>Rwamwiza Innocent</h3>
+        <span class="support-role">VP PMI-U</span>
+        <span class="support-phone">+256 782 635 445</span>
+        <span class="whatsapp-action">Chat on WhatsApp <span aria-hidden="true">&rarr;</span></span>
+      </a>
+
+      <a class="support-card" href="https://wa.me/27822102763" target="_blank" rel="noopener noreferrer" aria-label="Message Semwano Chonya, Peku Peku Travel Lead, on WhatsApp">
+        <span class="profile-thumb"><img src="Profile%20Pics/Semwano%20Chonya.jpeg" alt="Semwano Chonya" loading="lazy" /></span>
+        <h3>Semwano Chonya</h3>
+        <span class="support-role">Peku Peku Travel Lead</span>
+        <span class="support-phone">+27 82 210 2763</span>
+        <span class="whatsapp-action">Chat on WhatsApp <span aria-hidden="true">&rarr;</span></span>
+      </a>
     </div>
   </div>
 </section>
@@ -292,6 +377,7 @@ th{background:#f3effb;font-size:12px;text-transform:uppercase;letter-spacing:.4p
     </div>
     <div>
       <small>Explore</small><br/>
+      <a href="#support">Contact support</a><br/>
       <a href="#album">Excursions</a> &nbsp;·&nbsp; <a href="#register">Register</a>
     </div>
     <div>
@@ -321,6 +407,11 @@ th{background:#f3effb;font-size:12px;text-transform:uppercase;letter-spacing:.4p
   </div>
 </div>
 
+<div class="trip-bar" id="tripBar" aria-live="polite">
+  <div class="trip-bar-copy"><b id="tripBarCount">1 activity selected</b><span id="tripBarTotals"></span></div>
+  <a href="#register" class="btn primary">Review my trip →</a>
+</div>
+
 <script>
 /* ========================================================================
    CONFIG — set your Formspree endpoint (or Google Apps Script URL) here.
@@ -346,6 +437,13 @@ const EXCURSIONS = [
   {date:"2026-09-18",day:"Friday",theme:"The Cape Peninsula",t:"Cape Point & Boulders Beach Full-Day Tour",tag:"Second departure",zar:1800,usd:110,d:"A second opportunity to journey through dramatic coastal scenery to Cape Point, the Cape of Good Hope and the African penguin colony at Boulders Beach.",history:"The Cape Peninsula’s protected fynbos is part of the extraordinarily biodiverse Cape Floral Region. At Boulders, boardwalks allow close views while helping protect an endangered penguin colony.",f:"African penguins Boulder Bay 1.jpg",source:"https://www.sanparks.org/parks/table-mountain/what-to-do/attractions/cape-of-good-hope-cape-point",sourceLabel:"SANParks — Cape Point",duration:"Full day",format:"Guided tour",highlights:["Cape Point","Cape of Good Hope","Boulders penguins","Coastal scenery"]},
   {date:"2026-09-19",day:"Saturday",theme:"Last-Minute Cape Town",t:"Shop, Explore, Depart or Robben Island",tag:"Final day",zar:660,usd:40,d:"Depending on flight time, shop, return to the V&A Waterfront, explore the city or visit Robben Island before saying goodbye to Cape Town.",history:"The V&A Waterfront remains part of South Africa’s oldest working harbour. Its Clock Tower, completed in 1882, once housed the port captain and still marks the site’s maritime past amid today’s shops and restaurants.",f:"Victorian Clock Tower, Table Bay Harbour, Cape Town V&A Waterfront, Western Cape. 1883. Gothic Style. 08.JPG",source:"https://www.waterfront.co.za/our-story-2",sourceLabel:"V&A Waterfront — Our Story"}
 ];
+const ACTIVITY_IDS = {
+  '2026-09-11':'SEP11_CITY', '2026-09-12':'SEP12_CITY',
+  '2026-09-13':'SEP13_CAPE_POINT', '2026-09-16':'SEP16_WEST_COAST',
+  '2026-09-17':'SEP17_CITY', '2026-09-18':'SEP18_CAPE_POINT',
+  '2026-09-19':'SEP19_FINAL'
+};
+EXCURSIONS.forEach(e=>{ if(e.zar) e.id=ACTIVITY_IDS[e.date]; });
 
 /* hero background */
 document.getElementById('heroBg').style.backgroundImage = "url('" + img("Cape Town Skyline of CBD at Dusk.jpg",1900) + "')";
@@ -365,6 +463,8 @@ const defaults = e => ({
   itinerary:e.itinerary || [e.d],
   why:e.why || 'Choose this experience to add a memorable Cape Town perspective to your GSSA journey.'
 });
+const REQUIRED_ACTIVITY_ID = 'SEP16_WEST_COAST';
+const selectedActivities = new Set([REQUIRED_ACTIVITY_ID]);
 const grouped = Object.groupBy ? Object.groupBy(EXCURSIONS,e=>e.date) : EXCURSIONS.reduce((a,e)=>((a[e.date]??=[]).push(e),a),{});
 Object.entries(grouped).forEach(([date,activities],groupIndex)=>{
   if(date==='2026-09-16'){
@@ -382,10 +482,12 @@ Object.entries(grouped).forEach(([date,activities],groupIndex)=>{
   activities.forEach(e=>{
     const i=EXCURSIONS.indexOf(e),r=money(e),card=document.createElement('article');
     const x=defaults(e);
-    card.className='card'; card.tabIndex=0; card.dataset.index=i; card.dataset.type=e.group?'group':(e.included?'included':'paid');
+    card.className='card'+(e.id&&selectedActivities.has(e.id)?' selected':''); card.tabIndex=0; card.dataset.index=i; card.dataset.type=e.group?'group':(e.included?'included':'paid');
+    if(e.id) card.dataset.activityId=e.id;
     card.dataset.search=[e.t,e.theme,e.tag,e.d,x.highlights.join(' ')].join(' ').toLowerCase();
     card.setAttribute('aria-label','View details for '+e.t);
-    card.innerHTML='<div class="ph"><span class="badge">'+e.tag+'</span><img loading="lazy" src="'+img(e.f,900)+'" alt="'+e.t+'"/><div class="rate-banner"><span>'+r.zar+'</span><span>'+r.usd+'</span><span>'+r.ugx+'</span></div></div><div class="body"><span class="tag">'+new Date(e.date+'T12:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'</span><h3>'+e.t+'</h3><div class="card-facts"><span class="mini-chip">◷ '+x.duration+'</span><span class="mini-chip">'+x.format+'</span></div><p>'+e.d+'</p>'+(e.group?'<div class="group-callout">● One shared experience for the full group<span>Wine · Braai · Country villages · Coast · Landscapes</span></div>':'')+'<div class="foot"><button class="selbtn" type="button">Explore full details →</button></div></div>';
+    const selectButton=e.id?'<button class="selbtn'+(selectedActivities.has(e.id)?' active':'')+'" data-action="select" type="button" '+(e.id===REQUIRED_ACTIVITY_ID?'disabled':'')+'>'+(e.id===REQUIRED_ACTIVITY_ID?'✓ Group activity':selectedActivities.has(e.id)?'✓ Added':'＋ Add to my trip')+'</button>':'';
+    card.innerHTML='<div class="ph"><span class="badge">'+e.tag+'</span><img loading="lazy" src="'+img(e.f,900)+'" alt="'+e.t+'"/><div class="rate-banner"><span>'+r.zar+'</span><span>'+r.usd+'</span><span>'+r.ugx+'</span></div></div><div class="body"><span class="tag">'+new Date(e.date+'T12:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'</span><h3>'+e.t+'</h3><div class="card-facts"><span class="mini-chip">◷ '+x.duration+'</span><span class="mini-chip">'+x.format+'</span></div><p>'+e.d+'</p>'+(e.group?'<div class="group-callout">● One shared experience for the full group<span>Wine · Braai · Country villages · Coast · Landscapes</span></div>':'')+'<div class="foot"><button class="details-btn" data-action="details" type="button">View details →</button>'+selectButton+'</div></div>';
     dayGrid.appendChild(card);
   });
   grid.appendChild(section);
@@ -406,10 +508,18 @@ function openDetails(index){
   document.getElementById('detailWhy').textContent=x.why;
   document.getElementById('detailHistory').textContent=e.history;
   const source=document.getElementById('detailSource'); source.href=e.source; source.textContent=e.sourceLabel+' ↗';
+  const selectButton=document.getElementById('selectExcursionBtn');
+  selectButton.hidden=!e.id;
+  selectButton.disabled=e.id===REQUIRED_ACTIVITY_ID;
+  selectButton.textContent=e.id===REQUIRED_ACTIVITY_ID?'✓ Required group activity':selectedActivities.has(e.id)?'Remove from my trip':'＋ Add to my trip';
   modal.classList.add('open'); document.body.style.overflow='hidden'; modal.querySelector('.x').focus();
 }
 function closeDetails(){document.getElementById('detailModal').classList.remove('open');document.body.style.overflow='';}
-grid.addEventListener('click',ev=>{const card=ev.target.closest('.card');if(card)openDetails(Number(card.dataset.index));});
+grid.addEventListener('click',ev=>{
+  const card=ev.target.closest('.card'); if(!card)return;
+  if(ev.target.closest('[data-action="select"]')){toggleActivity(card.dataset.activityId);return;}
+  openDetails(Number(card.dataset.index));
+});
 grid.addEventListener('keydown',ev=>{if((ev.key==='Enter'||ev.key===' ')&&ev.target.classList.contains('card')){ev.preventDefault();openDetails(Number(ev.target.dataset.index));}});
 document.getElementById('detailModal').addEventListener('click',ev=>{if(ev.target.id==='detailModal')closeDetails();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetails();});
@@ -443,25 +553,36 @@ const form = document.getElementById('regForm');
 const msg = document.getElementById('msg');
 const btn = document.getElementById('submitBtn');
 const LS_KEY = 'gssa2026_registrations';
-const excursionSelect = document.getElementById('excursionSelect');
-EXCURSIONS.filter(e=>e.zar).forEach(e=>{
-  const option=document.createElement('option');
-  option.value=e.date+' · '+e.t;
-  option.textContent=new Date(e.date+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' · '+e.t+(e.group?' (Group activity)':'');
-  excursionSelect.appendChild(option);
-});
-function updateSelectedPill(){
-  const label=excursionSelect.options[excursionSelect.selectedIndex]?.text;
-  document.getElementById('selPill').textContent=excursionSelect.value?'★ Selected: '+label:'★ Select an excursion from the album';
+const paidActivities=EXCURSIONS.filter(e=>e.id);
+const activityById=id=>paidActivities.find(e=>e.id===id);
+function selectedList(){return paidActivities.filter(e=>selectedActivities.has(e.id));}
+function selectedTotals(){return selectedList().reduce((a,e)=>({zar:a.zar+e.zar,usd:a.usd+e.usd,ugx:a.ugx+(e.usd*UGX_PER_USD)}),{zar:0,usd:0,ugx:0});}
+function toggleActivity(id){
+  if(!id||id===REQUIRED_ACTIVITY_ID)return;
+  selectedActivities.has(id)?selectedActivities.delete(id):selectedActivities.add(id);
+  updateSelectionUI();
 }
-excursionSelect.addEventListener('change',updateSelectedPill);
+function updateSelectionUI(){
+  const selected=selectedList(),totals=selectedTotals();
+  document.querySelectorAll('.card[data-activity-id]').forEach(card=>{
+    const active=selectedActivities.has(card.dataset.activityId),button=card.querySelector('[data-action="select"]');
+    card.classList.toggle('selected',active);
+    if(button&&card.dataset.activityId!==REQUIRED_ACTIVITY_ID){button.classList.toggle('active',active);button.textContent=active?'✓ Added':'＋ Add to my trip';}
+  });
+  document.getElementById('selectionPanel').innerHTML=selected.map(e=>'<div class="selection-row"><div><b>'+new Date(e.date+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' · '+e.t+'</b><small>ZAR '+e.zar.toLocaleString('en-ZA')+' · US$ '+e.usd.toLocaleString('en-US')+(e.id===REQUIRED_ACTIVITY_ID?' · Required group activity':'')+'</small></div><button class="remove-activity" type="button" data-remove="'+e.id+'" '+(e.id===REQUIRED_ACTIVITY_ID?'disabled':'')+'>'+(e.id===REQUIRED_ACTIVITY_ID?'Required':'Remove')+'</button></div>').join('');
+  document.getElementById('selectionTotals').innerHTML='<div class="selection-total"><b>ZAR '+totals.zar.toLocaleString('en-ZA')+'</b><span>Total per person</span></div><div class="selection-total"><b>US$ '+totals.usd.toLocaleString('en-US')+'</b><span>Total per person</span></div><div class="selection-total"><b>UGX '+totals.ugx.toLocaleString('en-UG')+'</b><span>Indicative total</span></div>';
+  document.getElementById('selPill').textContent='★ '+selected.length+' '+(selected.length===1?'activity':'activities')+' selected';
+  document.getElementById('tripBarCount').textContent=selected.length+' '+(selected.length===1?'activity':'activities')+' selected';
+  document.getElementById('tripBarTotals').textContent=' · ZAR '+totals.zar.toLocaleString('en-ZA')+' · US$ '+totals.usd.toLocaleString('en-US')+' · UGX '+totals.ugx.toLocaleString('en-UG');
+  document.getElementById('tripBar').classList.toggle('show',selected.length>0);
+}
+document.getElementById('selectionPanel').addEventListener('click',ev=>{const button=ev.target.closest('[data-remove]');if(button)toggleActivity(button.dataset.remove);});
 document.getElementById('selectExcursionBtn').addEventListener('click',()=>{
   const e=EXCURSIONS[Number(document.getElementById('detailModal').dataset.index)];
-  if(e.zar){ excursionSelect.value=e.date+' · '+e.t; updateSelectedPill(); }
+  if(e.id)toggleActivity(e.id);
   closeDetails();
-  document.getElementById('register').scrollIntoView({behavior:'smooth'});
-  if(!e.zar) excursionSelect.focus();
 });
+updateSelectionUI();
 
 function saveLocal(rec){
   const all = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
@@ -473,9 +594,16 @@ form.addEventListener('submit', async (e)=>{
   e.preventDefault();
   msg.className='msg';
   const data = Object.fromEntries(new FormData(form).entries());
-  if(!data.full_name || !data.email || !data.whatsapp || !data.excursion){ show('err','Please fill in your name, email and phone, then choose an excursion.'); return; }
+  const activities=selectedList(),totals=selectedTotals();
+  if(!data.full_name || !data.email || !data.whatsapp || !activities.length){ show('err','Please fill in your name, email and phone, then choose at least one activity.'); return; }
   data.submitted_at = new Date().toISOString();
   data.trip = 'GSSA 2026 · Cape Town Journey';
+  data.activities = activities.map(e=>e.id);
+  data.excursion = activities.map(e=>e.date+' · '+e.t).join(' | ');
+  data.activity_count = activities.length;
+  data.total_zar = totals.zar;
+  data.total_usd = totals.usd;
+  data.total_ugx = totals.ugx;
   btn.disabled = true; btn.textContent = 'Submitting…';
 
   // always keep a local backup
@@ -498,15 +626,15 @@ form.addEventListener('submit', async (e)=>{
         if(!res.ok) throw new Error('Endpoint '+res.status);
       }
     }
-    show('ok','🎉 Thank you, '+data.full_name.split(' ')[0]+'! Your interest is registered. We’ll be in touch about the Cape Town journey.');
+    show('ok','🎉 Thank you, '+data.full_name.split(' ')[0]+'! Your '+activities.length+' '+(activities.length===1?'activity is':'activities are')+' registered. We’ll be in touch about the Cape Town journey.');
     form.reset();
     form.querySelector('[name=chapter]').value='PMI Uganda Chapter';
-    updateSelectedPill();
+    selectedActivities.clear(); selectedActivities.add(REQUIRED_ACTIVITY_ID); updateSelectionUI();
   }catch(err){
     show('ok','✅ Saved! Your registration is recorded'+(CONFIG.FORM_ENDPOINT?'':' (form endpoint not yet connected — kept safely on this device)')+'.');
     form.reset();
     form.querySelector('[name=chapter]').value='PMI Uganda Chapter';
-    updateSelectedPill();
+    selectedActivities.clear(); selectedActivities.add(REQUIRED_ACTIVITY_ID); updateSelectionUI();
   }finally{
     btn.disabled=false; btn.textContent='Register my interest';
   }
@@ -516,7 +644,7 @@ form.addEventListener('submit', async (e)=>{
 function renderAdmin(){
   const all = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
   document.getElementById('adminCount').textContent = all.length + ' saved on this device';
-  const cols = ['submitted_at','full_name','email','whatsapp','pmi_id','chapter','excursion','notes'];
+  const cols = ['submitted_at','full_name','email','whatsapp','pmi_id','chapter','activity_count','total_zar','total_usd','total_ugx','excursion','notes'];
   let html = '<tr>'+cols.map(c=>'<th>'+c+'</th>').join('')+'</tr>';
   all.slice().reverse().forEach(r=>{ html+='<tr>'+cols.map(c=>'<td>'+((r[c]||'').toString().replace(/</g,'&lt;'))+'</td>').join('')+'</tr>'; });
   document.getElementById('adminTable').innerHTML = html;
@@ -524,7 +652,7 @@ function renderAdmin(){
 function exportCSV(){
   const all = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
   if(!all.length){ alert('No local registrations yet.'); return; }
-  const cols = ['submitted_at','full_name','email','whatsapp','pmi_id','chapter','excursion','notes','trip'];
+  const cols = ['submitted_at','full_name','email','whatsapp','pmi_id','chapter','activity_count','total_zar','total_usd','total_ugx','excursion','notes','trip'];
   const esc = v => '"'+String(v==null?'':v).replace(/"/g,'""')+'"';
   const csv = [cols.join(',')].concat(all.map(r=>cols.map(c=>esc(r[c])).join(','))).join('\n');
   const blob = new Blob([csv],{type:'text/csv'});
