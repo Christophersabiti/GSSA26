@@ -1,12 +1,25 @@
 const SPREADSHEET_ID = '1qNcFVdiRHJlAjDEiR3kmD5WtLdRY_Pg5dHAe3DY7bL8';
-const SHEET_NAME = 'Linked';
-const CORE_HEADERS = [
-  'submitted_at', 'full_name', 'email', 'whatsapp', 'pmi_id',
-  'chapter', 'excursion', 'notes', 'trip'
+const REGISTRATIONS_SHEET = 'Registrations';
+const SELECTIONS_SHEET = 'Activity Selections';
+const CATALOG_SHEET = 'Activity Catalog';
+
+const REGISTRATION_HEADERS = [
+  'registration_id', 'submitted_at', 'full_name', 'email', 'whatsapp',
+  'pmi_id', 'chapter', 'activity_count', 'total_zar', 'total_usd',
+  'total_ugx', 'notes', 'trip'
+];
+const SELECTION_HEADERS = [
+  'registration_id', 'submitted_at', 'full_name', 'email', 'whatsapp',
+  'activity_id', 'activity_date', 'activity_name', 'rate_zar', 'rate_usd',
+  'rate_ugx'
+];
+const RESERVED_PAYLOAD_FIELDS = [
+  'activities', 'excursion', 'activity_count', 'total_zar', 'total_usd',
+  'total_ugx', 'submitted_at'
 ];
 
 function doGet() {
-  return jsonResponse_({ ok: true, service: 'GSSA 2026 registration receiver' });
+  return jsonResponse_({ ok: true, service: 'GSSA 2026 multi-activity receiver', version: 2 });
 }
 
 function doPost(e) {
@@ -14,27 +27,72 @@ function doPost(e) {
 
   try {
     const payload = parsePayload_(e);
-    validatePayload_(payload);
-    lock.waitLock(10000);
+    validateParticipant_(payload);
+    lock.waitLock(15000);
 
     const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
-    const sheet = spreadsheet.getSheetByName(SHEET_NAME);
-    if (!sheet) throw new Error('Destination sheet not found: ' + SHEET_NAME);
+    const catalog = loadCatalog_(spreadsheet.getSheetByName(CATALOG_SHEET));
+    const activities = resolveActivities_(payload, catalog);
+    const totals = activities.reduce(function (sum, activity) {
+      sum.zar += activity.rate_zar;
+      sum.usd += activity.rate_usd;
+      sum.ugx += activity.rate_ugx;
+      return sum;
+    }, { zar: 0, usd: 0, ugx: 0 });
 
-    const headers = ensureHeaders_(sheet, payload);
-    const row = headers.map(function (header) {
-      if (header === 'submitted_at') {
-        const submitted = payload[header] ? new Date(payload[header]) : new Date();
-        return isNaN(submitted.getTime()) ? new Date() : submitted;
-      }
-      return safeCellValue_(payload[header]);
+    const registrationId = Utilities.getUuid();
+    const submittedAt = validDate_(payload.submitted_at);
+    const registrationSheet = requireSheet_(spreadsheet, REGISTRATIONS_SHEET);
+    const selectionsSheet = requireSheet_(spreadsheet, SELECTIONS_SHEET);
+    const registrationHeaders = ensureRegistrationHeaders_(registrationSheet, payload);
+
+    ensureRowCapacity_(registrationSheet, 1);
+    ensureRowCapacity_(selectionsSheet, activities.length);
+
+    const registrationRecord = Object.assign({}, payload, {
+      registration_id: registrationId,
+      submitted_at: submittedAt,
+      activity_count: activities.length,
+      total_zar: totals.zar,
+      total_usd: totals.usd,
+      total_ugx: totals.ugx
     });
+    const registrationRow = registrationHeaders.map(function (header) {
+      return safeCellValue_(registrationRecord[header]);
+    });
+    const registrationRowNumber = Math.max(registrationSheet.getLastRow() + 1, 2);
+    registrationSheet.getRange(registrationRowNumber, 1, 1, registrationHeaders.length)
+      .setValues([registrationRow]);
+    registrationSheet.getRange(registrationRowNumber, 2).setNumberFormat('yyyy-mm-dd hh:mm:ss');
 
-    const nextRow = Math.max(sheet.getLastRow() + 1, 2);
-    sheet.getRange(nextRow, 1, 1, headers.length).setValues([row]);
-    sheet.getRange(nextRow, 1).setNumberFormat('yyyy-mm-dd hh:mm:ss');
+    const selectionStartRow = Math.max(selectionsSheet.getLastRow() + 1, 2);
+    const selectionRows = activities.map(function (activity) {
+      const record = {
+        registration_id: registrationId,
+        submitted_at: submittedAt,
+        full_name: payload.full_name,
+        email: payload.email,
+        whatsapp: payload.whatsapp,
+        activity_id: activity.activity_id,
+        activity_date: activity.activity_date,
+        activity_name: activity.activity_name,
+        rate_zar: activity.rate_zar,
+        rate_usd: activity.rate_usd,
+        rate_ugx: activity.rate_ugx
+      };
+      return SELECTION_HEADERS.map(function (header) { return safeCellValue_(record[header]); });
+    });
+    selectionsSheet.getRange(selectionStartRow, 1, selectionRows.length, SELECTION_HEADERS.length)
+      .setValues(selectionRows);
+    selectionsSheet.getRange(selectionStartRow, 2, selectionRows.length, 1)
+      .setNumberFormat('yyyy-mm-dd hh:mm:ss');
 
-    return jsonResponse_({ ok: true, row: nextRow });
+    return jsonResponse_({
+      ok: true,
+      registration_id: registrationId,
+      activity_count: activities.length,
+      totals: totals
+    });
   } catch (error) {
     return jsonResponse_({ ok: false, error: String(error.message || error) });
   } finally {
@@ -43,9 +101,7 @@ function doPost(e) {
 }
 
 function parsePayload_(e) {
-  if (!e || !e.postData || !e.postData.contents) {
-    throw new Error('No registration data received.');
-  }
+  if (!e || !e.postData || !e.postData.contents) throw new Error('No registration data received.');
   const payload = JSON.parse(e.postData.contents);
   if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
     throw new Error('Invalid registration payload.');
@@ -53,8 +109,8 @@ function parsePayload_(e) {
   return payload;
 }
 
-function validatePayload_(payload) {
-  ['full_name', 'email', 'whatsapp', 'excursion'].forEach(function (field) {
+function validateParticipant_(payload) {
+  ['full_name', 'email', 'whatsapp'].forEach(function (field) {
     if (!String(payload[field] || '').trim()) throw new Error('Missing field: ' + field);
   });
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(payload.email))) {
@@ -62,49 +118,110 @@ function validatePayload_(payload) {
   }
 }
 
-function ensureHeaders_(sheet, payload) {
-  const lastColumn = sheet.getLastColumn();
-  let headers = lastColumn
-    ? sheet.getRange(1, 1, 1, lastColumn).getDisplayValues()[0].map(String)
-    : [];
+function loadCatalog_(sheet) {
+  if (!sheet) throw new Error('Activity Catalog sheet not found.');
+  const values = sheet.getDataRange().getValues();
+  if (values.length < 2) throw new Error('Activity Catalog is empty.');
+  const headers = values[0].map(String);
+  return values.slice(1).filter(function (row) { return row[0]; }).map(function (row) {
+    const record = {};
+    headers.forEach(function (header, index) { record[header] = row[index]; });
+    record.activity_id = String(record.activity_id);
+    record.activity_date = formatCatalogDate_(record.activity_date);
+    record.activity_name = String(record.activity_name);
+    record.rate_zar = Number(record.rate_zar) || 0;
+    record.rate_usd = Number(record.rate_usd) || 0;
+    record.rate_ugx = Number(record.rate_ugx) || 0;
+    record.required = record.required === true;
+    record.active = record.active === true;
+    return record;
+  });
+}
 
-  if (!headers.some(Boolean)) {
-    headers = CORE_HEADERS.slice();
-    sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+function resolveActivities_(payload, catalog) {
+  let requested = Array.isArray(payload.activities) ? payload.activities.map(String) : [];
+  if (!requested.length && typeof payload.activities === 'string') {
+    try {
+      const parsed = JSON.parse(payload.activities);
+      requested = Array.isArray(parsed) ? parsed.map(String) : String(payload.activities).split(',');
+    } catch (ignore) {
+      requested = String(payload.activities).split(',');
+    }
   }
 
-  const additionalHeaders = Object.keys(payload).filter(function (key) {
-    return /^[a-zA-Z][a-zA-Z0-9_]*$/.test(key) && headers.indexOf(key) === -1;
+  if (!requested.length && payload.excursion) {
+    const legacy = String(payload.excursion);
+    requested = catalog.filter(function (activity) {
+      return legacy.indexOf(activity.activity_date) !== -1 && legacy.indexOf(activity.activity_name) !== -1;
+    }).map(function (activity) { return activity.activity_id; });
+  }
+
+  catalog.filter(function (activity) { return activity.required && activity.active; })
+    .forEach(function (activity) { requested.push(activity.activity_id); });
+  requested = requested.map(function (id) { return String(id).trim(); }).filter(Boolean);
+  requested = requested.filter(function (id, index) { return requested.indexOf(id) === index; });
+
+  const byId = {};
+  catalog.forEach(function (activity) { if (activity.active) byId[activity.activity_id] = activity; });
+  const unknown = requested.filter(function (id) { return !byId[id]; });
+  if (unknown.length) throw new Error('Unknown or inactive activity: ' + unknown.join(', '));
+  if (!requested.length) throw new Error('Select at least one activity.');
+  return requested.map(function (id) { return byId[id]; });
+}
+
+function ensureRegistrationHeaders_(sheet, payload) {
+  let headers = sheet.getRange(1, 1, 1, Math.max(sheet.getLastColumn(), REGISTRATION_HEADERS.length))
+    .getDisplayValues()[0].map(String).filter(Boolean);
+  if (!headers.length) headers = REGISTRATION_HEADERS.slice();
+
+  const additions = Object.keys(payload).filter(function (key) {
+    return /^[a-zA-Z][a-zA-Z0-9_]*$/.test(key) &&
+      RESERVED_PAYLOAD_FIELDS.indexOf(key) === -1 && headers.indexOf(key) === -1;
   });
-
-  if (additionalHeaders.length) {
-    const firstNewColumn = headers.length + 1;
-    sheet.getRange(1, firstNewColumn, 1, additionalHeaders.length)
-      .setValues([additionalHeaders])
-      .setBackground('#eeeeee')
-      .setFontWeight('bold')
-      .setHorizontalAlignment('center')
-      .setVerticalAlignment('middle')
-      .setWrap(true);
-    sheet.setColumnWidths(firstNewColumn, additionalHeaders.length, 180);
-    headers = headers.concat(additionalHeaders);
-
-    const existingFilter = sheet.getFilter();
-    if (existingFilter) existingFilter.remove();
+  if (additions.length) {
+    const firstColumn = headers.length + 1;
+    const extraColumns = firstColumn + additions.length - 1 - sheet.getMaxColumns();
+    if (extraColumns > 0) sheet.insertColumnsAfter(sheet.getMaxColumns(), extraColumns);
+    sheet.getRange(1, firstColumn, 1, additions.length).setValues([additions])
+      .setBackground('#eeeeee').setFontWeight('bold').setHorizontalAlignment('center').setWrap(true);
+    sheet.setColumnWidths(firstColumn, additions.length, 180);
+    headers = headers.concat(additions);
+    const filter = sheet.getFilter();
+    if (filter) filter.remove();
     sheet.getRange(1, 1, sheet.getMaxRows(), headers.length).createFilter();
   }
-
   return headers;
+}
+
+function ensureRowCapacity_(sheet, additionalRows) {
+  const needed = sheet.getLastRow() + additionalRows;
+  if (needed > sheet.getMaxRows()) sheet.insertRowsAfter(sheet.getMaxRows(), needed - sheet.getMaxRows());
+}
+
+function requireSheet_(spreadsheet, name) {
+  const sheet = spreadsheet.getSheetByName(name);
+  if (!sheet) throw new Error('Destination sheet not found: ' + name);
+  return sheet;
+}
+
+function validDate_(value) {
+  const date = value ? new Date(value) : new Date();
+  return isNaN(date.getTime()) ? new Date() : date;
+}
+
+function formatCatalogDate_(value) {
+  if (value instanceof Date) return Utilities.formatDate(value, 'Africa/Kampala', 'yyyy-MM-dd');
+  return String(value);
 }
 
 function safeCellValue_(value) {
   if (value === undefined || value === null) return '';
+  if (value instanceof Date || typeof value === 'number' || typeof value === 'boolean') return value;
   const text = String(value).trim();
   return text.charAt(0) === '=' ? "'" + text : text;
 }
 
 function jsonResponse_(body) {
-  return ContentService
-    .createTextOutput(JSON.stringify(body))
+  return ContentService.createTextOutput(JSON.stringify(body))
     .setMimeType(ContentService.MimeType.JSON);
 }
