@@ -7,11 +7,11 @@ GitHub + Vercel.
 ## What it does
 - Hero + branded PMI Uganda landing
 - **Dated excursion itinerary** sourced from `2026 09 _ PMI UGANDA Excursions.pdf`
-- Tap any activity for its full details, researched history and source
+- Search and filter the itinerary, then tap any activity for highlights, practical details, itinerary, history and source
 - Assigned ZAR and USD rates plus an indicative UGX conversion on every card
-- Three selectable Western Cape experiences grouped under 16 September
+- 16 September group activity: **Darling & the West Coast** (the group top pick)
 - **Registration form**: Full name, Email, WhatsApp/Phone, PMI Membership ID,
-  Chapter/City, Excursion choice (Cape Town Experience open now; more added later)
+  Chapter/City and a date-specific excursion choice populated from the itinerary
 - Submissions post to your form endpoint **and** are backed up in-browser
 - Hidden admin view at `#admin` (open `.../index.html#admin`) to view + **export CSV**
 
@@ -26,10 +26,11 @@ Registrations save locally even with no endpoint, but to collect them centrally:
    const CONFIG = { FORM_ENDPOINT: "https://formspree.io/f/abcdwxyz", ENDPOINT_TYPE: "formspree" };
    ```
 
-**Option B — Google Sheet (Apps Script)**
-1. In a Google Sheet: Extensions → Apps Script, paste a `doPost(e)` that appends
-   `JSON.parse(e.postData.contents)` to the sheet, and Deploy → Web app (access: Anyone).
-2. Put the Web-app URL in `FORM_ENDPOINT` and set `ENDPOINT_TYPE: "gsheet"`.
+**Option B — Google Sheet (configured for this project)**
+1. Follow [`google-apps-script/SETUP.md`](google-apps-script/SETUP.md) to deploy the
+   included receiver from the connected `Excursions GSSA26` spreadsheet.
+2. Put the resulting `/exec` URL in `FORM_ENDPOINT`. `ENDPOINT_TYPE` is already `"gsheet"`.
+3. The receiver adds columns automatically for any future form fields.
 
 ## 2) Push to GitHub
 ```bash
