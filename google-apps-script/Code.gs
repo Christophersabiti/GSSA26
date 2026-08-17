@@ -19,7 +19,7 @@ const RESERVED_PAYLOAD_FIELDS = [
 ];
 
 function doGet() {
-  return jsonResponse_({ ok: true, service: 'GSSA 2026 multi-activity receiver', version: 2 });
+  return jsonResponse_({ ok: true, service: 'GSSA 2026 multi-activity receiver', version: 3 });
 }
 
 function doPost(e) {
@@ -132,7 +132,7 @@ function loadCatalog_(sheet) {
     record.rate_zar = Number(record.rate_zar) || 0;
     record.rate_usd = Number(record.rate_usd) || 0;
     record.rate_ugx = Number(record.rate_ugx) || 0;
-    record.required = record.required === true;
+    record.default_selected = record.default_selected === true;
     record.active = record.active === true;
     return record;
   });
@@ -156,8 +156,6 @@ function resolveActivities_(payload, catalog) {
     }).map(function (activity) { return activity.activity_id; });
   }
 
-  catalog.filter(function (activity) { return activity.required && activity.active; })
-    .forEach(function (activity) { requested.push(activity.activity_id); });
   requested = requested.map(function (id) { return String(id).trim(); }).filter(Boolean);
   requested = requested.filter(function (id, index) { return requested.indexOf(id) === index; });
 

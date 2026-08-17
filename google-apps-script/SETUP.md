@@ -19,8 +19,13 @@ Google Sheets cannot receive a website form submission directly. Deploy the incl
 6. Set **Execute as** to **Me** and **Who has access** to **Anyone**.
 7. Deploy and approve access. Keep the URL ending in `/exec`.
 8. Confirm that URL matches `CONFIG.FORM_ENDPOINT` in `index.html`.
+9. Open the `/exec` URL in a browser and confirm the response reports
+   `"service":"GSSA 2026 multi-activity receiver"` and `"version":3`. If it does
+   not, edit the existing deployment again and select **New version**.
 
-The version 2 receiver accepts several activity IDs in one request, looks up trusted
+The version 3 receiver accepts several activity IDs in one request, looks up trusted
 rates from `Activity Catalog`, and writes one row to `Registrations` plus one row per
 activity to `Activity Selections`. It automatically adds new participant-level form
 fields to `Registrations`, so future additions do not require rewriting the sheet.
+The West Coast group activity is selected by default in the website, but the receiver
+respects the participant's final choices and does not add it back after removal.
