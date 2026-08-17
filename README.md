@@ -10,7 +10,7 @@ GitHub + Vercel.
 - Search and filter the itinerary, then tap any activity for highlights, practical details, itinerary, history and source
 - Assigned ZAR and USD rates plus an indicative UGX conversion on every card
 - 16 September group activity: **Darling & the West Coast** (the group top pick)
-- Multi-select activity planner with a mandatory group activity and running ZAR, USD and indicative UGX totals
+- Multi-select activity planner with a default-selected, removable group activity and running ZAR, USD and indicative UGX totals
 - **Registration form**: Full name, Email, WhatsApp/Phone, PMI Membership ID,
   Chapter/City and a date-specific excursion choice populated from the itinerary
 - One submission writes a participant record plus separate reportable activity-selection rows, and is backed up in-browser

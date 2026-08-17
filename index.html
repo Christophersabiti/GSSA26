@@ -120,7 +120,7 @@ section.block{padding:66px 0}
 .side li b{color:var(--ink)}
 .dot{flex:0 0 auto;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,rgba(240,78,35,.14),rgba(58,26,107,.12));display:grid;place-items:center;color:var(--orange);font-weight:900}
 .selected-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(240,78,35,.1);color:var(--orange);font-weight:800;padding:8px 14px;border-radius:20px;font-size:13px;margin-top:8px}
-.selection-panel{border:1.5px solid var(--line);border-radius:14px;background:#fdfcff;overflow:hidden}.selection-empty{padding:18px;color:var(--muted);font-size:14px}.selection-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:13px 15px;border-bottom:1px solid var(--line)}.selection-row:last-child{border-bottom:0}.selection-row b{display:block;font-size:13px}.selection-row small{color:var(--muted)}.remove-activity{border:0;background:#fff1eb;color:#a53516;border-radius:18px;padding:6px 10px;font-weight:800;cursor:pointer}.remove-activity:disabled{background:#f2eff7;color:var(--muted);cursor:default}
+.selection-panel{border:1.5px solid var(--line);border-radius:14px;background:#fdfcff;overflow:hidden}.selection-empty{padding:18px;color:var(--muted);font-size:14px}.selection-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:13px 15px;border-bottom:1px solid var(--line)}.selection-row:last-child{border-bottom:0}.selection-row b{display:block;font-size:13px}.selection-row small{color:var(--muted)}.remove-activity{border:0;background:#fff1eb;color:#a53516;border-radius:18px;padding:6px 10px;font-weight:800;cursor:pointer}
 .selection-totals{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.selection-total{background:#f5f1fc;border-radius:11px;padding:10px;text-align:center}.selection-total b{display:block;color:var(--purple);font-size:15px}.selection-total span{font-size:10px;text-transform:uppercase;color:var(--muted);font-weight:800}
 .trip-bar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(140%);z-index:70;width:min(760px,calc(100vw - 28px));background:var(--purple-2);color:#fff;border-radius:18px;padding:12px 14px 12px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 18px 50px rgba(15,8,32,.35);transition:transform .3s}.trip-bar.show{transform:translateX(-50%) translateY(0)}.trip-bar-copy{font-size:13px}.trip-bar-copy b{font-size:15px}.trip-bar .btn{padding:10px 16px;font-size:13px;white-space:nowrap}
 @media(max-width:600px){.selection-totals{grid-template-columns:1fr}.trip-bar{align-items:flex-start}.trip-bar-copy span{display:block}.trip-bar .btn{padding:9px 12px}}
@@ -463,8 +463,8 @@ const defaults = e => ({
   itinerary:e.itinerary || [e.d],
   why:e.why || 'Choose this experience to add a memorable Cape Town perspective to your GSSA journey.'
 });
-const REQUIRED_ACTIVITY_ID = 'SEP16_WEST_COAST';
-const selectedActivities = new Set([REQUIRED_ACTIVITY_ID]);
+const DEFAULT_ACTIVITY_ID = 'SEP16_WEST_COAST';
+const selectedActivities = new Set([DEFAULT_ACTIVITY_ID]);
 const grouped = Object.groupBy ? Object.groupBy(EXCURSIONS,e=>e.date) : EXCURSIONS.reduce((a,e)=>((a[e.date]??=[]).push(e),a),{});
 Object.entries(grouped).forEach(([date,activities],groupIndex)=>{
   if(date==='2026-09-16'){
@@ -486,7 +486,7 @@ Object.entries(grouped).forEach(([date,activities],groupIndex)=>{
     if(e.id) card.dataset.activityId=e.id;
     card.dataset.search=[e.t,e.theme,e.tag,e.d,x.highlights.join(' ')].join(' ').toLowerCase();
     card.setAttribute('aria-label','View details for '+e.t);
-    const selectButton=e.id?'<button class="selbtn'+(selectedActivities.has(e.id)?' active':'')+'" data-action="select" type="button" '+(e.id===REQUIRED_ACTIVITY_ID?'disabled':'')+'>'+(e.id===REQUIRED_ACTIVITY_ID?'✓ Group activity':selectedActivities.has(e.id)?'✓ Added':'＋ Add to my trip')+'</button>':'';
+    const selectButton=e.id?'<button class="selbtn'+(selectedActivities.has(e.id)?' active':'')+'" data-action="select" type="button">'+(selectedActivities.has(e.id)?'✓ Added':'＋ Add to my trip')+'</button>':'';
     card.innerHTML='<div class="ph"><span class="badge">'+e.tag+'</span><img loading="lazy" src="'+img(e.f,900)+'" alt="'+e.t+'"/><div class="rate-banner"><span>'+r.zar+'</span><span>'+r.usd+'</span><span>'+r.ugx+'</span></div></div><div class="body"><span class="tag">'+new Date(e.date+'T12:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'</span><h3>'+e.t+'</h3><div class="card-facts"><span class="mini-chip">◷ '+x.duration+'</span><span class="mini-chip">'+x.format+'</span></div><p>'+e.d+'</p>'+(e.group?'<div class="group-callout">● One shared experience for the full group<span>Wine · Braai · Country villages · Coast · Landscapes</span></div>':'')+'<div class="foot"><button class="details-btn" data-action="details" type="button">View details →</button>'+selectButton+'</div></div>';
     dayGrid.appendChild(card);
   });
@@ -510,8 +510,8 @@ function openDetails(index){
   const source=document.getElementById('detailSource'); source.href=e.source; source.textContent=e.sourceLabel+' ↗';
   const selectButton=document.getElementById('selectExcursionBtn');
   selectButton.hidden=!e.id;
-  selectButton.disabled=e.id===REQUIRED_ACTIVITY_ID;
-  selectButton.textContent=e.id===REQUIRED_ACTIVITY_ID?'✓ Required group activity':selectedActivities.has(e.id)?'Remove from my trip':'＋ Add to my trip';
+  selectButton.disabled=false;
+  selectButton.textContent=selectedActivities.has(e.id)?'Remove from my trip':'＋ Add to my trip';
   modal.classList.add('open'); document.body.style.overflow='hidden'; modal.querySelector('.x').focus();
 }
 function closeDetails(){document.getElementById('detailModal').classList.remove('open');document.body.style.overflow='';}
@@ -558,7 +558,7 @@ const activityById=id=>paidActivities.find(e=>e.id===id);
 function selectedList(){return paidActivities.filter(e=>selectedActivities.has(e.id));}
 function selectedTotals(){return selectedList().reduce((a,e)=>({zar:a.zar+e.zar,usd:a.usd+e.usd,ugx:a.ugx+(e.usd*UGX_PER_USD)}),{zar:0,usd:0,ugx:0});}
 function toggleActivity(id){
-  if(!id||id===REQUIRED_ACTIVITY_ID)return;
+  if(!id)return;
   selectedActivities.has(id)?selectedActivities.delete(id):selectedActivities.add(id);
   updateSelectionUI();
 }
@@ -567,9 +567,9 @@ function updateSelectionUI(){
   document.querySelectorAll('.card[data-activity-id]').forEach(card=>{
     const active=selectedActivities.has(card.dataset.activityId),button=card.querySelector('[data-action="select"]');
     card.classList.toggle('selected',active);
-    if(button&&card.dataset.activityId!==REQUIRED_ACTIVITY_ID){button.classList.toggle('active',active);button.textContent=active?'✓ Added':'＋ Add to my trip';}
+    if(button){button.classList.toggle('active',active);button.textContent=active?'✓ Added':'＋ Add to my trip';}
   });
-  document.getElementById('selectionPanel').innerHTML=selected.map(e=>'<div class="selection-row"><div><b>'+new Date(e.date+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' · '+e.t+'</b><small>ZAR '+e.zar.toLocaleString('en-ZA')+' · US$ '+e.usd.toLocaleString('en-US')+(e.id===REQUIRED_ACTIVITY_ID?' · Required group activity':'')+'</small></div><button class="remove-activity" type="button" data-remove="'+e.id+'" '+(e.id===REQUIRED_ACTIVITY_ID?'disabled':'')+'>'+(e.id===REQUIRED_ACTIVITY_ID?'Required':'Remove')+'</button></div>').join('');
+  document.getElementById('selectionPanel').innerHTML=selected.map(e=>'<div class="selection-row"><div><b>'+new Date(e.date+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' · '+e.t+'</b><small>ZAR '+e.zar.toLocaleString('en-ZA')+' · US$ '+e.usd.toLocaleString('en-US')+(e.id===DEFAULT_ACTIVITY_ID?' · Group activity — selected by default':'')+'</small></div><button class="remove-activity" type="button" data-remove="'+e.id+'">Remove</button></div>').join('');
   document.getElementById('selectionTotals').innerHTML='<div class="selection-total"><b>ZAR '+totals.zar.toLocaleString('en-ZA')+'</b><span>Total per person</span></div><div class="selection-total"><b>US$ '+totals.usd.toLocaleString('en-US')+'</b><span>Total per person</span></div><div class="selection-total"><b>UGX '+totals.ugx.toLocaleString('en-UG')+'</b><span>Indicative total</span></div>';
   document.getElementById('selPill').textContent='★ '+selected.length+' '+(selected.length===1?'activity':'activities')+' selected';
   document.getElementById('tripBarCount').textContent=selected.length+' '+(selected.length===1?'activity':'activities')+' selected';
@@ -629,12 +629,12 @@ form.addEventListener('submit', async (e)=>{
     show('ok','🎉 Thank you, '+data.full_name.split(' ')[0]+'! Your '+activities.length+' '+(activities.length===1?'activity is':'activities are')+' registered. We’ll be in touch about the Cape Town journey.');
     form.reset();
     form.querySelector('[name=chapter]').value='PMI Uganda Chapter';
-    selectedActivities.clear(); selectedActivities.add(REQUIRED_ACTIVITY_ID); updateSelectionUI();
+    selectedActivities.clear(); selectedActivities.add(DEFAULT_ACTIVITY_ID); updateSelectionUI();
   }catch(err){
     show('ok','✅ Saved! Your registration is recorded'+(CONFIG.FORM_ENDPOINT?'':' (form endpoint not yet connected — kept safely on this device)')+'.');
     form.reset();
     form.querySelector('[name=chapter]').value='PMI Uganda Chapter';
-    selectedActivities.clear(); selectedActivities.add(REQUIRED_ACTIVITY_ID); updateSelectionUI();
+    selectedActivities.clear(); selectedActivities.add(DEFAULT_ACTIVITY_ID); updateSelectionUI();
   }finally{
     btn.disabled=false; btn.textContent='Register my interest';
   }
