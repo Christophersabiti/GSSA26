@@ -87,7 +87,7 @@ section.block{padding:66px 0}
 .card .tag{color:var(--orange);font-weight:700;font-size:12px;letter-spacing:.5px;text-transform:uppercase}
 .card p{margin:0;color:var(--muted);font-size:14px}
 .card-facts{display:flex;gap:7px;flex-wrap:wrap;margin-top:4px}.mini-chip{background:#f5f1fc;color:var(--purple);border-radius:20px;padding:5px 9px;font-size:11px;font-weight:800}
-.group-callout{margin-top:4px;border-radius:10px;padding:9px 11px;background:linear-gradient(110deg,rgba(240,78,35,.1),rgba(255,122,47,.06));color:#9e3417;font-size:12px;font-weight:800}.group-callout span{display:block;color:var(--muted);font-weight:700;margin-top:3px}
+.group-callout,.optional-callout{margin-top:4px;border-radius:10px;padding:9px 11px;font-size:12px;font-weight:800}.group-callout{background:linear-gradient(110deg,rgba(240,78,35,.1),rgba(255,122,47,.06));color:#9e3417}.optional-callout{background:#f5f1fc;color:var(--purple)}.group-callout span,.optional-callout span{display:block;color:var(--muted);font-weight:700;margin-top:3px}
 .card .foot{margin-top:auto;padding-top:12px;display:flex;align-items:center;justify-content:space-between}
 .selbtn{border:1.5px solid var(--orange);background:#fff;color:var(--orange);font-weight:800;font-size:13px;padding:9px 16px;border-radius:24px;cursor:pointer;transition:.2s}
 .selbtn:hover{background:var(--orange);color:#fff}
@@ -121,7 +121,7 @@ section.block{padding:66px 0}
 .dot{flex:0 0 auto;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,rgba(240,78,35,.14),rgba(58,26,107,.12));display:grid;place-items:center;color:var(--orange);font-weight:900}
 .selected-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(240,78,35,.1);color:var(--orange);font-weight:800;padding:8px 14px;border-radius:20px;font-size:13px;margin-top:8px}
 .selection-panel{border:1.5px solid var(--line);border-radius:14px;background:#fdfcff;overflow:hidden}.selection-empty{padding:18px;color:var(--muted);font-size:14px}.selection-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:13px 15px;border-bottom:1px solid var(--line)}.selection-row:last-child{border-bottom:0}.selection-row b{display:block;font-size:13px}.selection-row small{color:var(--muted)}.remove-activity{border:0;background:#fff1eb;color:#a53516;border-radius:18px;padding:6px 10px;font-weight:800;cursor:pointer}
-.selection-totals{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.selection-total{background:#f5f1fc;border-radius:11px;padding:10px;text-align:center}.selection-total b{display:block;color:var(--purple);font-size:15px}.selection-total span{font-size:10px;text-transform:uppercase;color:var(--muted);font-weight:800}
+.selection-totals{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.selection-total{background:#f5f1fc;border-radius:11px;padding:10px;text-align:center}.selection-total.optional{background:#fff1eb}.selection-total.optional b{color:#a53516}.selection-total b{display:block;color:var(--purple);font-size:15px}.selection-total span{font-size:10px;text-transform:uppercase;color:var(--muted);font-weight:800}
 .trip-bar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(140%);z-index:70;width:min(760px,calc(100vw - 28px));background:var(--purple-2);color:#fff;border-radius:18px;padding:12px 14px 12px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 18px 50px rgba(15,8,32,.35);transition:transform .3s}.trip-bar.show{transform:translateX(-50%) translateY(0)}.trip-bar-copy{font-size:13px}.trip-bar-copy b{font-size:15px}.trip-bar .btn{padding:10px 16px;font-size:13px;white-space:nowrap}
 @media(max-width:600px){.selection-totals{grid-template-columns:1fr}.trip-bar{align-items:flex-start}.trip-bar-copy span{display:block}.trip-bar .btn{padding:9px 12px}}
 
@@ -432,7 +432,8 @@ const EXCURSIONS = [
   {date:"2026-09-11",day:"Friday",theme:"History, City & Shopping",t:"Robben Island, City Exploration or Shopping",tag:"Flexible day",zar:660,usd:40,d:"Take the ferry to Robben Island, explore the inner city, browse cafés and local markets, shop, or spend the afternoon at the V&A Waterfront. Choose the Cape Town that suits your pace.",history:"Robben Island served as a prison, hospital and military base between the 17th and 20th centuries. Nelson Mandela spent 18 of his 27 prison years there; UNESCO inscribed the island in 1999 as a symbol of freedom overcoming oppression.",f:"Robben Island - Cape Town, South Africa (3883849594).jpg",source:"https://whc.unesco.org/en/list/916",sourceLabel:"UNESCO — Robben Island"},
   {date:"2026-09-12",day:"Saturday",theme:"Cape Town From Every Angle",t:"Bus, Table Mountain, Canal & Aquarium",tag:"City discovery",zar:1460,usd:90,d:"Use the Hop-On Hop-Off Bus to reach celebrated city sights, head up Table Mountain, cruise the Waterfront canals, discover Two Oceans Aquarium or leave time for shopping.",history:"Table Mountain’s cableway opened on 4 October 1929 with a car carrying 19 passengers and a conductor. Down below, the V&A Waterfront grew from the working harbour whose first basin was begun by Prince Alfred in 1860.",f:"Table Mountain, Cape Town (P1050222).jpg",source:"https://www.tablemountain.net/about-us",sourceLabel:"Table Mountain Cableway history"},
   {date:"2026-09-13",day:"Sunday",theme:"The Cape Peninsula",t:"Cape Point & Boulders Beach Full-Day Tour",tag:"Essential Cape",zar:1800,usd:110,d:"Leave the city for Cape Point and the Cape of Good Hope, travelling through coastal villages and spectacular scenery before meeting the African penguins at Boulders Beach.",history:"Bartolomeu Dias rounded the Cape in 1488, giving the peninsula a lasting place in seafaring history. The Boulders penguin colony was established in 1983 and is now one of the world’s rare land-based African penguin colonies.",f:"Sign of the Cape of Good Hope.jpg",source:"https://www.sanparks.org/parks/table-mountain/what-to-do/attractions/boulders-penguin-colony",sourceLabel:"SANParks — Boulders Penguin Colony",duration:"Full day",format:"Guided tour",highlights:["Cape Point","Cape of Good Hope","Boulders penguins","Coastal villages"]},
-  {date:"2026-09-16",day:"Wednesday",theme:"The Taste of the Western Cape",t:"Darling & the West Coast",tag:"Group activity · Top pick",zar:2500,usd:150,group:true,d:"Leave central Cape Town behind for small towns, farms and the wide-open landscapes of the West Coast. Enjoy wine tasting, beautiful countryside, a proper South African braai and charming Cape villages before finishing beside the Atlantic at Melkbosstrand or Big Bay, with Table Mountain as the final backdrop.",history:"The Cape West Coast sits within the Cape Floral Kingdom. After winter rains, its spring landscape can erupt into seasonal colour; the region’s villages, farms and braai culture offer a warm window into everyday Western Cape life.",f:"Namaqualand Wild Flower Route.JPG",source:"https://www.sanparks.org/parks/west-coast",sourceLabel:"SANParks — West Coast National Park",duration:"Approximately 7–8 hours",format:"Hosted group activity",highlights:["Wine tasting","South African braai","Country villages","Spring landscapes","Atlantic coast","Table Mountain views"],itinerary:["Depart central Cape Town and travel into the West Coast countryside","Explore Darling, nearby farms and charming Cape villages","Enjoy a wine tasting and a proper South African braai","Take in the Cape Floral Kingdom’s spring landscapes, if nature cooperates","Finish at Melkbosstrand or Big Bay for ocean air, beach views and Table Mountain"],why:"If you want something that feels distinctly South African, this is our pick. Choose it for a little bit of everything: wine, food, countryside, flowers, villages, ocean and a taste of everyday Western Cape life.",note:"Spring flowers are seasonal and depend on weather and nature. The exact route and stops may adjust to local conditions."},
+  {date:"2026-09-16",day:"Wednesday",theme:"The Taste of the Western Cape",t:"West Coast Exploration, Darling Flower Show, Braai & Beach Sunset",tag:"Group activity · Top pick",zar:2500,usd:150,group:true,d:"Spend a full day exploring the West Coast, visit the Flower Show in Darling, enjoy a proper South African braai and finish with sunset on the beach.",history:"The Cape West Coast sits within the Cape Floral Kingdom. After winter rains, its spring landscape can erupt into seasonal colour; the region’s villages, farms and braai culture offer a warm window into everyday Western Cape life.",f:"Namaqualand Wild Flower Route.JPG",source:"https://www.sanparks.org/parks/west-coast",sourceLabel:"SANParks — West Coast National Park",duration:"Full day",format:"Hosted group activity",highlights:["West Coast exploration","Flower Show in Darling","South African braai","Beach sunset"],itinerary:["Depart central Cape Town for a full-day West Coast exploration","Visit the Flower Show in Darling","Enjoy a proper South African braai","Finish the day watching the sunset on the beach"],why:"Choose the group’s top pick for a full day combining the West Coast’s landscapes, Darling’s seasonal flowers, South African food and an Atlantic beach sunset.",note:"The flower show and displays are seasonal and depend on local conditions. Final timings, route and beach stop will be confirmed with participants."},
+  {id:"SEP16_QUAD_BIKING",date:"2026-09-16",day:"Wednesday",theme:"The Taste of the Western Cape",t:"Quad Biking in a Nature Reserve",tag:"Optional extra",zar:900,usd:55,optional:true,d:"Add a quad-biking experience in a nature reserve to your 16 September programme. This extra is selected and paid for separately at your own cost.",history:"Guided quad-bike outings offer an active way to experience the Western Cape’s open landscapes while following the reserve operator’s designated routes and safety guidance.",f:"Quad Bikes Groot Marico.jpg",source:"https://commons.wikimedia.org/wiki/File:Quad_Bikes_Groot_Marico.jpg",sourceLabel:"Wikimedia Commons — Quad Bikes Groot Marico",duration:"Timing to be confirmed",format:"Optional add-on",highlights:["Guided quad biking","Nature reserve setting","Active outdoor experience","Separate selection"],itinerary:["Transfer to the nature reserve, subject to the final group schedule","Complete the operator’s safety briefing and equipment fitting","Enjoy the guided quad-biking route","Rejoin the main 16 September programme"],why:"Add this if you would like a more active nature experience alongside the shared West Coast day.",note:"Optional extra at your own cost: ZAR 900 per person (approximately USD 55). Select and pay for this separately. Final operator, timing, availability and requirements will be confirmed."},
   {date:"2026-09-17",day:"Thursday",theme:"Cape Town From Every Angle",t:"Bus, Table Mountain, Canal & Aquarium",tag:"Second departure",zar:1460,usd:90,d:"A second chance for later arrivals to use the Hop-On Hop-Off Bus, ascend Table Mountain, cruise the Waterfront canals, visit Two Oceans Aquarium or enjoy independent shopping.",history:"The Two Oceans Aquarium opened at the V&A Waterfront in 1995. Together with the century-old cableway and the historic harbour, it reveals Cape Town from summit, street, canal and underwater perspectives.",f:"Two Oceans Aquarium05.jpg",source:"https://www.aquarium.co.za/about",sourceLabel:"Two Oceans Aquarium — About"},
   {date:"2026-09-18",day:"Friday",theme:"The Cape Peninsula",t:"Cape Point & Boulders Beach Full-Day Tour",tag:"Second departure",zar:1800,usd:110,d:"A second opportunity to journey through dramatic coastal scenery to Cape Point, the Cape of Good Hope and the African penguin colony at Boulders Beach.",history:"The Cape Peninsula’s protected fynbos is part of the extraordinarily biodiverse Cape Floral Region. At Boulders, boardwalks allow close views while helping protect an endangered penguin colony.",f:"African penguins Boulder Bay 1.jpg",source:"https://www.sanparks.org/parks/table-mountain/what-to-do/attractions/cape-of-good-hope-cape-point",sourceLabel:"SANParks — Cape Point",duration:"Full day",format:"Guided tour",highlights:["Cape Point","Cape of Good Hope","Boulders penguins","Coastal scenery"]},
   {date:"2026-09-19",day:"Saturday",theme:"Last-Minute Cape Town",t:"Shop, Explore, Depart or Robben Island",tag:"Final day",zar:660,usd:40,d:"Depending on flight time, shop, return to the V&A Waterfront, explore the city or visit Robben Island before saying goodbye to Cape Town.",history:"The V&A Waterfront remains part of South Africa’s oldest working harbour. Its Clock Tower, completed in 1882, once housed the port captain and still marks the site’s maritime past amid today’s shops and restaurants.",f:"Victorian Clock Tower, Table Bay Harbour, Cape Town V&A Waterfront, Western Cape. 1883. Gothic Style. 08.JPG",source:"https://www.waterfront.co.za/our-story-2",sourceLabel:"V&A Waterfront — Our Story"}
@@ -443,7 +444,7 @@ const ACTIVITY_IDS = {
   '2026-09-17':'SEP17_CITY', '2026-09-18':'SEP18_CAPE_POINT',
   '2026-09-19':'SEP19_FINAL'
 };
-EXCURSIONS.forEach(e=>{ if(e.zar) e.id=ACTIVITY_IDS[e.date]; });
+EXCURSIONS.forEach(e=>{ if(e.zar&&!e.id) e.id=ACTIVITY_IDS[e.date]; });
 
 /* hero background */
 document.getElementById('heroBg').style.backgroundImage = "url('" + img("Cape Town Skyline of CBD at Dusk.jpg",1900) + "')";
@@ -477,7 +478,8 @@ Object.entries(grouped).forEach(([date,activities],groupIndex)=>{
   const section=document.createElement('section');
   section.className='day-group';
   section.dataset.date=date;
-  section.innerHTML='<div class="day-head"><div class="day-date"><b>'+dt.getDate()+'</b><span>Sep 2026</span></div><div><h3>'+activities[0].day+' · '+activities[0].theme+'</h3><p>'+(activities[0].group?'Group activity · our top pick':activities.length+' '+(activities.length===1?'activity':'activities'))+' · tap for full details</p></div></div><div class="grid"></div>';
+  const daySummary=date==='2026-09-16'?activities.length+' activities · group activity selected by default':activities.length+' '+(activities.length===1?'activity':'activities');
+  section.innerHTML='<div class="day-head"><div class="day-date"><b>'+dt.getDate()+'</b><span>Sep 2026</span></div><div><h3>'+activities[0].day+' · '+activities[0].theme+'</h3><p>'+daySummary+' · tap for full details</p></div></div><div class="grid"></div>';
   const dayGrid=section.querySelector('.grid');
   activities.forEach(e=>{
     const i=EXCURSIONS.indexOf(e),r=money(e),card=document.createElement('article');
@@ -487,7 +489,7 @@ Object.entries(grouped).forEach(([date,activities],groupIndex)=>{
     card.dataset.search=[e.t,e.theme,e.tag,e.d,x.highlights.join(' ')].join(' ').toLowerCase();
     card.setAttribute('aria-label','View details for '+e.t);
     const selectButton=e.id?'<button class="selbtn'+(selectedActivities.has(e.id)?' active':'')+'" data-action="select" type="button">'+(selectedActivities.has(e.id)?'✓ Added':'＋ Add to my trip')+'</button>':'';
-    card.innerHTML='<div class="ph"><span class="badge">'+e.tag+'</span><img loading="lazy" src="'+img(e.f,900)+'" alt="'+e.t+'"/><div class="rate-banner"><span>'+r.zar+'</span><span>'+r.usd+'</span><span>'+r.ugx+'</span></div></div><div class="body"><span class="tag">'+new Date(e.date+'T12:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'</span><h3>'+e.t+'</h3><div class="card-facts"><span class="mini-chip">◷ '+x.duration+'</span><span class="mini-chip">'+x.format+'</span></div><p>'+e.d+'</p>'+(e.group?'<div class="group-callout">● One shared experience for the full group<span>Wine · Braai · Country villages · Coast · Landscapes</span></div>':'')+'<div class="foot"><button class="details-btn" data-action="details" type="button">View details →</button>'+selectButton+'</div></div>';
+    card.innerHTML='<div class="ph"><span class="badge">'+e.tag+'</span><img loading="lazy" src="'+img(e.f,900)+'" alt="'+e.t+'"/><div class="rate-banner"><span>'+r.zar+'</span><span>'+r.usd+'</span><span>'+r.ugx+'</span></div></div><div class="body"><span class="tag">'+new Date(e.date+'T12:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'</span><h3>'+e.t+'</h3><div class="card-facts"><span class="mini-chip">◷ '+x.duration+'</span><span class="mini-chip">'+x.format+'</span></div><p>'+e.d+'</p>'+(e.group?'<div class="group-callout">● One shared experience for the full group<span>West Coast · Darling flowers · Braai · Beach sunset</span></div>':'')+(e.optional?'<div class="optional-callout">Optional extra · selected separately<span>At your own cost: ZAR 900 (approximately US$ 55)</span></div>':'')+'<div class="foot"><button class="details-btn" data-action="details" type="button">View details →</button>'+selectButton+'</div></div>';
     dayGrid.appendChild(card);
   });
   grid.appendChild(section);
@@ -498,13 +500,15 @@ function openDetails(index){
   modal.dataset.index=index;
   document.getElementById('modalRate').innerHTML='<span>'+(e.zar?'PER PERSON · ':'INCLUDED · ')+r.zar+'</span><span>'+r.usd+'</span><span>'+r.ugx+'</span>';
   document.getElementById('detailImg').src=img(e.f,1400); document.getElementById('detailImg').alt=e.t;
-  document.getElementById('groupRibbon').hidden=!e.group;
+  const ribbon=document.getElementById('groupRibbon');
+  ribbon.hidden=!(e.group||e.optional);
+  ribbon.textContent=e.optional?'○ Optional extra · selected separately':'● Group activity · Our top pick';
   document.getElementById('detailMeta').textContent=e.day+' · '+new Date(e.date+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})+' · '+e.tag;
   document.getElementById('detailTitle').textContent=e.t;
   document.getElementById('detailDesc').textContent=e.d;
   document.getElementById('detailHighlights').innerHTML=x.highlights.map(v=>'<span class="highlight-chip">'+v+'</span>').join('');
   document.getElementById('detailItinerary').innerHTML=x.itinerary.map(v=>'<div class="itinerary-stop">'+v+'</div>').join('');
-  document.getElementById('detailPractical').innerHTML='<div class="practical-item"><b>Duration</b><span>'+x.duration+'</span></div><div class="practical-item"><b>Format</b><span>'+x.format+'</span></div><div class="practical-item"><b>Price basis</b><span>'+(e.zar?'Per person':'Included / no paid excursion')+'</span></div><div class="practical-item"><b>Good to know</b><span>'+(e.note||'Final timings and meeting point will be shared with participants.')+'</span></div>';
+  document.getElementById('detailPractical').innerHTML='<div class="practical-item"><b>Duration</b><span>'+x.duration+'</span></div><div class="practical-item"><b>Format</b><span>'+x.format+'</span></div><div class="practical-item"><b>Price basis</b><span>'+(e.optional?'Optional · own cost · selected separately':(e.zar?'Per person':'Included / no paid excursion'))+'</span></div><div class="practical-item"><b>Good to know</b><span>'+(e.note||'Final timings and meeting point will be shared with participants.')+'</span></div>';
   document.getElementById('detailWhy').textContent=x.why;
   document.getElementById('detailHistory').textContent=e.history;
   const source=document.getElementById('detailSource'); source.href=e.source; source.textContent=e.sourceLabel+' ↗';
@@ -556,24 +560,29 @@ const LS_KEY = 'gssa2026_registrations';
 const paidActivities=EXCURSIONS.filter(e=>e.id);
 const activityById=id=>paidActivities.find(e=>e.id===id);
 function selectedList(){return paidActivities.filter(e=>selectedActivities.has(e.id));}
-function selectedTotals(){return selectedList().reduce((a,e)=>({zar:a.zar+e.zar,usd:a.usd+e.usd,ugx:a.ugx+(e.usd*UGX_PER_USD)}),{zar:0,usd:0,ugx:0});}
+function sumActivities(activities){return activities.reduce((a,e)=>({zar:a.zar+e.zar,usd:a.usd+e.usd,ugx:a.ugx+(e.usd*UGX_PER_USD)}),{zar:0,usd:0,ugx:0});}
+function selectedCostBreakdown(){
+  const selected=selectedList();
+  return {main:sumActivities(selected.filter(e=>!e.optional)),optional:sumActivities(selected.filter(e=>e.optional)),grand:sumActivities(selected)};
+}
+function selectedTotals(){return selectedCostBreakdown().grand;}
 function toggleActivity(id){
   if(!id)return;
   selectedActivities.has(id)?selectedActivities.delete(id):selectedActivities.add(id);
   updateSelectionUI();
 }
 function updateSelectionUI(){
-  const selected=selectedList(),totals=selectedTotals();
+  const selected=selectedList(),costs=selectedCostBreakdown(),totals=costs.grand;
   document.querySelectorAll('.card[data-activity-id]').forEach(card=>{
     const active=selectedActivities.has(card.dataset.activityId),button=card.querySelector('[data-action="select"]');
     card.classList.toggle('selected',active);
     if(button){button.classList.toggle('active',active);button.textContent=active?'✓ Added':'＋ Add to my trip';}
   });
-  document.getElementById('selectionPanel').innerHTML=selected.map(e=>'<div class="selection-row"><div><b>'+new Date(e.date+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' · '+e.t+'</b><small>ZAR '+e.zar.toLocaleString('en-ZA')+' · US$ '+e.usd.toLocaleString('en-US')+(e.id===DEFAULT_ACTIVITY_ID?' · Group activity — selected by default':'')+'</small></div><button class="remove-activity" type="button" data-remove="'+e.id+'">Remove</button></div>').join('');
-  document.getElementById('selectionTotals').innerHTML='<div class="selection-total"><b>ZAR '+totals.zar.toLocaleString('en-ZA')+'</b><span>Total per person</span></div><div class="selection-total"><b>US$ '+totals.usd.toLocaleString('en-US')+'</b><span>Total per person</span></div><div class="selection-total"><b>UGX '+totals.ugx.toLocaleString('en-UG')+'</b><span>Indicative total</span></div>';
+  document.getElementById('selectionPanel').innerHTML=selected.map(e=>'<div class="selection-row"><div><b>'+new Date(e.date+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' · '+e.t+'</b><small>ZAR '+e.zar.toLocaleString('en-ZA')+' · US$ '+e.usd.toLocaleString('en-US')+(e.id===DEFAULT_ACTIVITY_ID?' · Group activity — selected by default':(e.optional?' · Optional extra — own cost':''))+'</small></div><button class="remove-activity" type="button" data-remove="'+e.id+'">Remove</button></div>').join('');
+  document.getElementById('selectionTotals').innerHTML='<div class="selection-total"><b>ZAR '+costs.main.zar.toLocaleString('en-ZA')+'</b><span>Main activities</span></div><div class="selection-total"><b>US$ '+costs.main.usd.toLocaleString('en-US')+'</b><span>Main activities</span></div><div class="selection-total"><b>UGX '+costs.main.ugx.toLocaleString('en-UG')+'</b><span>Main activities · indicative</span></div><div class="selection-total optional"><b>ZAR '+costs.optional.zar.toLocaleString('en-ZA')+'</b><span>Optional extras</span></div><div class="selection-total optional"><b>US$ '+costs.optional.usd.toLocaleString('en-US')+'</b><span>Optional extras</span></div><div class="selection-total optional"><b>UGX '+costs.optional.ugx.toLocaleString('en-UG')+'</b><span>Optional extras · indicative</span></div>';
   document.getElementById('selPill').textContent='★ '+selected.length+' '+(selected.length===1?'activity':'activities')+' selected';
   document.getElementById('tripBarCount').textContent=selected.length+' '+(selected.length===1?'activity':'activities')+' selected';
-  document.getElementById('tripBarTotals').textContent=' · ZAR '+totals.zar.toLocaleString('en-ZA')+' · US$ '+totals.usd.toLocaleString('en-US')+' · UGX '+totals.ugx.toLocaleString('en-UG');
+  document.getElementById('tripBarTotals').textContent=' · Main US$ '+costs.main.usd.toLocaleString('en-US')+' · Optional US$ '+costs.optional.usd.toLocaleString('en-US')+' · Combined US$ '+totals.usd.toLocaleString('en-US');
   document.getElementById('tripBar').classList.toggle('show',selected.length>0);
 }
 document.getElementById('selectionPanel').addEventListener('click',ev=>{const button=ev.target.closest('[data-remove]');if(button)toggleActivity(button.dataset.remove);});
@@ -594,7 +603,7 @@ form.addEventListener('submit', async (e)=>{
   e.preventDefault();
   msg.className='msg';
   const data = Object.fromEntries(new FormData(form).entries());
-  const activities=selectedList(),totals=selectedTotals();
+  const activities=selectedList(),costs=selectedCostBreakdown(),totals=costs.grand;
   if(!data.full_name || !data.email || !data.whatsapp || !activities.length){ show('err','Please fill in your name, email and phone, then choose at least one activity.'); return; }
   data.submitted_at = new Date().toISOString();
   data.trip = 'GSSA 2026 · Cape Town Journey';
@@ -604,6 +613,12 @@ form.addEventListener('submit', async (e)=>{
   data.total_zar = totals.zar;
   data.total_usd = totals.usd;
   data.total_ugx = totals.ugx;
+  data.main_total_zar = costs.main.zar;
+  data.main_total_usd = costs.main.usd;
+  data.main_total_ugx = costs.main.ugx;
+  data.optional_total_zar = costs.optional.zar;
+  data.optional_total_usd = costs.optional.usd;
+  data.optional_total_ugx = costs.optional.ugx;
   btn.disabled = true; btn.textContent = 'Submitting…';
 
   // always keep a local backup
@@ -644,7 +659,7 @@ form.addEventListener('submit', async (e)=>{
 function renderAdmin(){
   const all = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
   document.getElementById('adminCount').textContent = all.length + ' saved on this device';
-  const cols = ['submitted_at','full_name','email','whatsapp','pmi_id','chapter','activity_count','total_zar','total_usd','total_ugx','excursion','notes'];
+  const cols = ['submitted_at','full_name','email','whatsapp','pmi_id','chapter','activity_count','main_total_zar','main_total_usd','main_total_ugx','optional_total_zar','optional_total_usd','optional_total_ugx','total_zar','total_usd','total_ugx','excursion','notes'];
   let html = '<tr>'+cols.map(c=>'<th>'+c+'</th>').join('')+'</tr>';
   all.slice().reverse().forEach(r=>{ html+='<tr>'+cols.map(c=>'<td>'+((r[c]||'').toString().replace(/</g,'&lt;'))+'</td>').join('')+'</tr>'; });
   document.getElementById('adminTable').innerHTML = html;
@@ -652,7 +667,7 @@ function renderAdmin(){
 function exportCSV(){
   const all = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
   if(!all.length){ alert('No local registrations yet.'); return; }
-  const cols = ['submitted_at','full_name','email','whatsapp','pmi_id','chapter','activity_count','total_zar','total_usd','total_ugx','excursion','notes','trip'];
+  const cols = ['submitted_at','full_name','email','whatsapp','pmi_id','chapter','activity_count','main_total_zar','main_total_usd','main_total_ugx','optional_total_zar','optional_total_usd','optional_total_ugx','total_zar','total_usd','total_ugx','excursion','notes','trip'];
   const esc = v => '"'+String(v==null?'':v).replace(/"/g,'""')+'"';
   const csv = [cols.join(',')].concat(all.map(r=>cols.map(c=>esc(r[c])).join(','))).join('\n');
   const blob = new Blob([csv],{type:'text/csv'});

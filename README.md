@@ -9,8 +9,9 @@ GitHub + Vercel.
 - **Dated excursion itinerary** sourced from `2026 09 _ PMI UGANDA Excursions.pdf`
 - Search and filter the itinerary, then tap any activity for highlights, practical details, itinerary, history and source
 - Assigned ZAR and USD rates plus an indicative UGX conversion on every card
-- 16 September group activity: **Darling & the West Coast** (the group top pick)
-- Multi-select activity planner with a default-selected, removable group activity and running ZAR, USD and indicative UGX totals
+- 16 September group activity: **West Coast exploration, Darling Flower Show, braai and beach sunset** (the group top pick)
+- Separately selectable 16 September optional extra: **Quad biking in a nature reserve** at the participant's own cost (ZAR 900 / approximately USD 55)
+- Multi-select activity planner with a default-selected, removable group activity and separate main-activity and optional-extra computations in ZAR, USD and indicative UGX
 - **Registration form**: Full name, Email, WhatsApp/Phone, PMI Membership ID,
   Chapter/City and a date-specific excursion choice populated from the itinerary
 - One submission writes a participant record plus separate reportable activity-selection rows, and is backed up in-browser
@@ -57,5 +58,5 @@ git push -u origin main
 - Photos load live from Wikimedia Commons (CC). To make the site fully self-hosted
   later, download them into an `/images` folder and swap the `img()` URLs.
 - Colours follow PMI branding (orange primary, purple, black, white).
-- Add more selectable excursions later by flipping `open:false → true` in the
-  `EXCURSIONS` array and adding `<option>`s to the excursion `<select>`.
+- Add more selectable excursions by adding a priced entry with a unique activity ID
+  to `EXCURSIONS` and a matching active row in the Google Sheets activity catalog.
