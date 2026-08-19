@@ -2,24 +2,27 @@ const SPREADSHEET_ID = '1qNcFVdiRHJlAjDEiR3kmD5WtLdRY_Pg5dHAe3DY7bL8';
 const REGISTRATIONS_SHEET = 'Registrations';
 const SELECTIONS_SHEET = 'Activity Selections';
 const CATALOG_SHEET = 'Activity Catalog';
+const OPTIONAL_ACTIVITY_IDS = ['SEP16_QUAD_BIKING'];
 
 const REGISTRATION_HEADERS = [
   'registration_id', 'submitted_at', 'full_name', 'email', 'whatsapp',
   'pmi_id', 'chapter', 'activity_count', 'total_zar', 'total_usd',
-  'total_ugx', 'notes', 'trip'
+  'total_ugx', 'main_total_zar', 'main_total_usd', 'main_total_ugx',
+  'optional_total_zar', 'optional_total_usd', 'optional_total_ugx', 'notes', 'trip'
 ];
 const SELECTION_HEADERS = [
   'registration_id', 'submitted_at', 'full_name', 'email', 'whatsapp',
-  'activity_id', 'activity_date', 'activity_name', 'rate_zar', 'rate_usd',
-  'rate_ugx'
+  'activity_id', 'activity_date', 'activity_name', 'activity_type',
+  'rate_zar', 'rate_usd', 'rate_ugx'
 ];
 const RESERVED_PAYLOAD_FIELDS = [
   'activities', 'excursion', 'activity_count', 'total_zar', 'total_usd',
-  'total_ugx', 'submitted_at'
+  'total_ugx', 'main_total_zar', 'main_total_usd', 'main_total_ugx',
+  'optional_total_zar', 'optional_total_usd', 'optional_total_ugx', 'submitted_at'
 ];
 
 function doGet() {
-  return jsonResponse_({ ok: true, service: 'GSSA 2026 multi-activity receiver', version: 3 });
+  return jsonResponse_({ ok: true, service: 'GSSA 2026 multi-activity receiver', version: 4 });
 }
 
 function doPost(e) {
@@ -33,18 +36,18 @@ function doPost(e) {
     const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
     const catalog = loadCatalog_(spreadsheet.getSheetByName(CATALOG_SHEET));
     const activities = resolveActivities_(payload, catalog);
-    const totals = activities.reduce(function (sum, activity) {
-      sum.zar += activity.rate_zar;
-      sum.usd += activity.rate_usd;
-      sum.ugx += activity.rate_ugx;
-      return sum;
-    }, { zar: 0, usd: 0, ugx: 0 });
+    const mainTotals = sumActivities_(activities.filter(function (activity) {
+      return !isOptionalActivity_(activity);
+    }));
+    const optionalTotals = sumActivities_(activities.filter(isOptionalActivity_));
+    const totals = sumActivities_(activities);
 
     const registrationId = Utilities.getUuid();
     const submittedAt = validDate_(payload.submitted_at);
     const registrationSheet = requireSheet_(spreadsheet, REGISTRATIONS_SHEET);
     const selectionsSheet = requireSheet_(spreadsheet, SELECTIONS_SHEET);
     const registrationHeaders = ensureRegistrationHeaders_(registrationSheet, payload);
+    const selectionHeaders = ensureHeaders_(selectionsSheet, SELECTION_HEADERS);
 
     ensureRowCapacity_(registrationSheet, 1);
     ensureRowCapacity_(selectionsSheet, activities.length);
@@ -55,7 +58,13 @@ function doPost(e) {
       activity_count: activities.length,
       total_zar: totals.zar,
       total_usd: totals.usd,
-      total_ugx: totals.ugx
+      total_ugx: totals.ugx,
+      main_total_zar: mainTotals.zar,
+      main_total_usd: mainTotals.usd,
+      main_total_ugx: mainTotals.ugx,
+      optional_total_zar: optionalTotals.zar,
+      optional_total_usd: optionalTotals.usd,
+      optional_total_ugx: optionalTotals.ugx
     });
     const registrationRow = registrationHeaders.map(function (header) {
       return safeCellValue_(registrationRecord[header]);
@@ -76,13 +85,14 @@ function doPost(e) {
         activity_id: activity.activity_id,
         activity_date: activity.activity_date,
         activity_name: activity.activity_name,
+        activity_type: isOptionalActivity_(activity) ? 'Optional extra' : 'Main activity',
         rate_zar: activity.rate_zar,
         rate_usd: activity.rate_usd,
         rate_ugx: activity.rate_ugx
       };
-      return SELECTION_HEADERS.map(function (header) { return safeCellValue_(record[header]); });
+      return selectionHeaders.map(function (header) { return safeCellValue_(record[header]); });
     });
-    selectionsSheet.getRange(selectionStartRow, 1, selectionRows.length, SELECTION_HEADERS.length)
+    selectionsSheet.getRange(selectionStartRow, 1, selectionRows.length, selectionHeaders.length)
       .setValues(selectionRows);
     selectionsSheet.getRange(selectionStartRow, 2, selectionRows.length, 1)
       .setNumberFormat('yyyy-mm-dd hh:mm:ss');
@@ -91,7 +101,9 @@ function doPost(e) {
       ok: true,
       registration_id: registrationId,
       activity_count: activities.length,
-      totals: totals
+      totals: totals,
+      main_totals: mainTotals,
+      optional_totals: optionalTotals
     });
   } catch (error) {
     return jsonResponse_({ ok: false, error: String(error.message || error) });
@@ -132,10 +144,27 @@ function loadCatalog_(sheet) {
     record.rate_zar = Number(record.rate_zar) || 0;
     record.rate_usd = Number(record.rate_usd) || 0;
     record.rate_ugx = Number(record.rate_ugx) || 0;
+    record.activity_type = String(record.activity_type || '');
+    record.optional = record.optional === true;
     record.default_selected = record.default_selected === true;
     record.active = record.active === true;
     return record;
   });
+}
+
+function sumActivities_(activities) {
+  return activities.reduce(function (sum, activity) {
+    sum.zar += activity.rate_zar;
+    sum.usd += activity.rate_usd;
+    sum.ugx += activity.rate_ugx;
+    return sum;
+  }, { zar: 0, usd: 0, ugx: 0 });
+}
+
+function isOptionalActivity_(activity) {
+  return activity.optional === true ||
+    String(activity.activity_type).toLowerCase() === 'optional' ||
+    OPTIONAL_ACTIVITY_IDS.indexOf(activity.activity_id) !== -1;
 }
 
 function resolveActivities_(payload, catalog) {
@@ -172,9 +201,12 @@ function ensureRegistrationHeaders_(sheet, payload) {
     .getDisplayValues()[0].map(String).filter(Boolean);
   if (!headers.length) headers = REGISTRATION_HEADERS.slice();
 
-  const additions = Object.keys(payload).filter(function (key) {
+  const requestedHeaders = REGISTRATION_HEADERS.concat(Object.keys(payload));
+  const additions = requestedHeaders.filter(function (key, index) {
     return /^[a-zA-Z][a-zA-Z0-9_]*$/.test(key) &&
-      RESERVED_PAYLOAD_FIELDS.indexOf(key) === -1 && headers.indexOf(key) === -1;
+      requestedHeaders.indexOf(key) === index &&
+      (REGISTRATION_HEADERS.indexOf(key) !== -1 || RESERVED_PAYLOAD_FIELDS.indexOf(key) === -1) &&
+      headers.indexOf(key) === -1;
   });
   if (additions.length) {
     const firstColumn = headers.length + 1;
@@ -187,6 +219,22 @@ function ensureRegistrationHeaders_(sheet, payload) {
     const filter = sheet.getFilter();
     if (filter) filter.remove();
     sheet.getRange(1, 1, sheet.getMaxRows(), headers.length).createFilter();
+  }
+  return headers;
+}
+
+function ensureHeaders_(sheet, requiredHeaders) {
+  let headers = sheet.getRange(1, 1, 1, Math.max(sheet.getLastColumn(), 1))
+    .getDisplayValues()[0].map(String).filter(Boolean);
+  const additions = requiredHeaders.filter(function (header) { return headers.indexOf(header) === -1; });
+  if (additions.length) {
+    const firstColumn = headers.length + 1;
+    const extraColumns = firstColumn + additions.length - 1 - sheet.getMaxColumns();
+    if (extraColumns > 0) sheet.insertColumnsAfter(sheet.getMaxColumns(), extraColumns);
+    sheet.getRange(1, firstColumn, 1, additions.length).setValues([additions])
+      .setBackground('#eeeeee').setFontWeight('bold').setHorizontalAlignment('center').setWrap(true);
+    sheet.setColumnWidths(firstColumn, additions.length, 180);
+    headers = headers.concat(additions);
   }
   return headers;
 }
