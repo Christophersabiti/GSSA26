@@ -8,6 +8,6 @@
   "background_color": "#faf8ff",
   "theme_color": "#3A1A6B",
   "icons": [
-    { "src": "pmi-simple-png.png", "sizes": "600x600", "type": "image/png", "purpose": "any maskable" }
+    { "src": "app-icon.png", "sizes": "1254x1254", "type": "image/png", "purpose": "any maskable" }
   ]
 }
