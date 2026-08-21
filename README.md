@@ -36,7 +36,7 @@ Registrations save locally even with no endpoint, but to collect them centrally:
    included receiver from the connected `Excursions GSSA26` spreadsheet.
 2. Put the resulting `/exec` URL in `FORM_ENDPOINT`. `ENDPOINT_TYPE` is already `"gsheet"`.
 3. The receiver adds columns automatically for any future form fields.
-4. Redeploy the Apps Script after code updates so the shared `Connections` sheet and directory endpoint are available.
+4. Redeploy the Apps Script after code updates so the shared `LinkedIN profiles` tab and directory endpoint are available.
 
 ## 2) Push to GitHub
 ```bash
