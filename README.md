@@ -16,6 +16,9 @@ GitHub + Vercel.
   Chapter/City and a date-specific excursion choice populated from the itinerary
 - One submission writes a participant record plus separate reportable activity-selection rows, and is backed up in-browser
 - Hidden admin view at `#admin` (open `.../index.html#admin`) to view + **export CSV**
+- Sticky responsive navigation with a direct **Sessions** link and compact mobile menu
+- Installable **Progressive Web App** with an offline app shell
+- Shared **Connect** directory for public LinkedIn profiles, sorted A-Z with a live count
 
 ## 1) Connect the sign-up endpoint (2 minutes)
 Registrations save locally even with no endpoint, but to collect them centrally:
@@ -33,6 +36,7 @@ Registrations save locally even with no endpoint, but to collect them centrally:
    included receiver from the connected `Excursions GSSA26` spreadsheet.
 2. Put the resulting `/exec` URL in `FORM_ENDPOINT`. `ENDPOINT_TYPE` is already `"gsheet"`.
 3. The receiver adds columns automatically for any future form fields.
+4. Redeploy the Apps Script after code updates so the shared `Connections` sheet and directory endpoint are available.
 
 ## 2) Push to GitHub
 ```bash

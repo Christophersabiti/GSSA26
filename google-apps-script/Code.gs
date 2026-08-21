@@ -2,6 +2,7 @@ const SPREADSHEET_ID = '1qNcFVdiRHJlAjDEiR3kmD5WtLdRY_Pg5dHAe3DY7bL8';
 const REGISTRATIONS_SHEET = 'Registrations';
 const SELECTIONS_SHEET = 'Activity Selections';
 const CATALOG_SHEET = 'Activity Catalog';
+const CONNECTIONS_SHEET = 'Connections';
 const OPTIONAL_ACTIVITY_IDS = ['SEP16_QUAD_BIKING'];
 
 const REGISTRATION_HEADERS = [
@@ -21,8 +22,12 @@ const RESERVED_PAYLOAD_FIELDS = [
   'optional_total_zar', 'optional_total_usd', 'optional_total_ugx', 'submitted_at'
 ];
 
-function doGet() {
-  return jsonResponse_({ ok: true, service: 'GSSA 2026 multi-activity receiver', version: 4 });
+function doGet(e) {
+  if (e && e.parameter && e.parameter.action === 'connections') {
+    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(CONNECTIONS_SHEET);
+    return jsonResponse_({ ok: true, connections: sheet ? readConnections_(sheet) : [] });
+  }
+  return jsonResponse_({ ok: true, service: 'GSSA 2026 multi-activity receiver', version: 5 });
 }
 
 function doPost(e) {
@@ -30,6 +35,7 @@ function doPost(e) {
 
   try {
     const payload = parsePayload_(e);
+    if (payload.record_type === 'connection') return saveConnection_(payload, lock);
     validateParticipant_(payload);
     lock.waitLock(15000);
 
@@ -110,6 +116,38 @@ function doPost(e) {
   } finally {
     if (lock.hasLock()) lock.releaseLock();
   }
+}
+
+function saveConnection_(payload, lock) {
+  const url = String(payload.linkedin_url || '').trim();
+  const name = String(payload.full_name || '').trim();
+  if (!/^https:\/\/(?:[a-z]{2,3}\.)?linkedin\.com\/in\//i.test(url)) throw new Error('Invalid LinkedIn profile URL.');
+  if (!name) throw new Error('LinkedIn profile name is required.');
+  lock.waitLock(15000);
+  const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
+  let sheet = spreadsheet.getSheetByName(CONNECTIONS_SHEET);
+  if (!sheet) sheet = spreadsheet.insertSheet(CONNECTIONS_SHEET);
+  const headers = ensureHeaders_(sheet, ['linkedin_url', 'full_name', 'thumbnail_url', 'description', 'submitted_at']);
+  const urlColumn = headers.indexOf('linkedin_url');
+  const existingRows = sheet.getLastRow() < 2 ? [] : sheet.getRange(2, 1, sheet.getLastRow() - 1, headers.length).getDisplayValues();
+  const existingIndex = existingRows.findIndex(function (row) { return String(row[urlColumn]).trim() === url; });
+  const record = { linkedin_url: url, full_name: name, thumbnail_url: payload.thumbnail_url || '', description: payload.description || '', submitted_at: validDate_(payload.submitted_at) };
+  const row = headers.map(function (header) { return safeCellValue_(record[header]); });
+  const rowNumber = existingIndex >= 0 ? existingIndex + 2 : Math.max(sheet.getLastRow() + 1, 2);
+  ensureRowCapacity_(sheet, existingIndex >= 0 ? 0 : 1);
+  sheet.getRange(rowNumber, 1, 1, headers.length).setValues([row]);
+  return jsonResponse_({ ok: true, connection: { url: url, name: name } });
+}
+
+function readConnections_(sheet) {
+  if (sheet.getLastRow() < 2) return [];
+  const values = sheet.getDataRange().getDisplayValues();
+  const headers = values[0].map(String);
+  return values.slice(1).filter(function (row) { return row[0]; }).map(function (row) {
+    const record = {};
+    headers.forEach(function (header, index) { record[header] = row[index]; });
+    return { url: record.linkedin_url, name: record.full_name, image: record.thumbnail_url, description: record.description };
+  }).sort(function (a, b) { return a.name.localeCompare(b.name); });
 }
 
 function parsePayload_(e) {
