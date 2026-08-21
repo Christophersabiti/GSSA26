@@ -2,7 +2,8 @@ const SPREADSHEET_ID = '1qNcFVdiRHJlAjDEiR3kmD5WtLdRY_Pg5dHAe3DY7bL8';
 const REGISTRATIONS_SHEET = 'Registrations';
 const SELECTIONS_SHEET = 'Activity Selections';
 const CATALOG_SHEET = 'Activity Catalog';
-const CONNECTIONS_SHEET = 'Connections';
+const CONNECTIONS_SHEET = 'LinkedIN profiles';
+const CONNECTIONS_SHEET_ID = 2025739129;
 const OPTIONAL_ACTIVITY_IDS = ['SEP16_QUAD_BIKING'];
 
 const REGISTRATION_HEADERS = [
@@ -24,7 +25,7 @@ const RESERVED_PAYLOAD_FIELDS = [
 
 function doGet(e) {
   if (e && e.parameter && e.parameter.action === 'connections') {
-    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(CONNECTIONS_SHEET);
+    const sheet = getConnectionsSheet_(SpreadsheetApp.openById(SPREADSHEET_ID));
     return jsonResponse_({ ok: true, connections: sheet ? readConnections_(sheet) : [] });
   }
   return jsonResponse_({ ok: true, service: 'GSSA 2026 multi-activity receiver', version: 5 });
@@ -125,8 +126,8 @@ function saveConnection_(payload, lock) {
   if (!name) throw new Error('LinkedIn profile name is required.');
   lock.waitLock(15000);
   const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
-  let sheet = spreadsheet.getSheetByName(CONNECTIONS_SHEET);
-  if (!sheet) sheet = spreadsheet.insertSheet(CONNECTIONS_SHEET);
+  const sheet = getConnectionsSheet_(spreadsheet);
+  if (!sheet) throw new Error('Destination sheet not found: ' + CONNECTIONS_SHEET);
   const headers = ensureHeaders_(sheet, ['linkedin_url', 'full_name', 'thumbnail_url', 'description', 'submitted_at']);
   const urlColumn = headers.indexOf('linkedin_url');
   const existingRows = sheet.getLastRow() < 2 ? [] : sheet.getRange(2, 1, sheet.getLastRow() - 1, headers.length).getDisplayValues();
@@ -148,6 +149,14 @@ function readConnections_(sheet) {
     headers.forEach(function (header, index) { record[header] = row[index]; });
     return { url: record.linkedin_url, name: record.full_name, image: record.thumbnail_url, description: record.description };
   }).sort(function (a, b) { return a.name.localeCompare(b.name); });
+}
+
+function getConnectionsSheet_(spreadsheet) {
+  const sheets = spreadsheet.getSheets();
+  for (let index = 0; index < sheets.length; index += 1) {
+    if (sheets[index].getSheetId() === CONNECTIONS_SHEET_ID) return sheets[index];
+  }
+  return null;
 }
 
 function parsePayload_(e) {
