@@ -21,31 +21,13 @@ Google Sheets cannot receive a website form submission directly. Deploy the incl
 7. Deploy and approve access. Keep the URL ending in `/exec`.
 8. Confirm that URL matches `CONFIG.FORM_ENDPOINT` in `index.html`.
 9. Open the `/exec` URL in a browser and confirm the response reports
-   `"service":"GSSA 2026 multi-activity receiver"` and `"version":5`. If it does
+   `"service":"GSSA 2026 multi-activity receiver"` and `"version":6`. If it does
    not, edit the existing deployment again and select **New version**.
 
-The version 5 receiver accepts several activity IDs in one request, looks up trusted
-rates from `Activity Catalog`, and writes one row to `Registrations` plus one row per
-activity to `Activity Selections`. It separately computes main-activity and optional-
-extra totals and automatically adds the new total/type columns. The West Coast group
-activity is selected by default in the website, but the receiver respects the
-participant's final choices and does not add it back after removal.
+The version 6 receiver enforces the compulsory September 16 package and allows at most one horse-riding duration. It computes main and optional totals separately from trusted rates. The September 16 rates in `SEP16_CATALOG` override stale spreadsheet entries and include all new options. Other days continue to use Activity Catalog.
 
-Version 5 also reads and writes public delegate profiles in the exact `LinkedIN profiles`
-tab identified by sheet ID `2025739129`. Website submissions are deduplicated by LinkedIn
-URL, and `?action=connections` returns the shared directory sorted by name.
+Deploy this receiver together with the website. Confirm the `/exec` response reports version 6 before accepting registrations for the new options. The main package has no supplied ZAR price: its rate and any combined ZAR total remain blank/null, while USD and indicative UGX totals remain complete. Never interpret that blank as a free package.
 
-Before publishing the website change, update `Activity Catalog`:
+`sep16-catalog.json` contains the exact matching catalog rows for reference. Existing historical registration rows are unchanged. The stable `SEP16_WEST_COAST` ID is retained for compatibility; its current title and price are replaced.
 
-1. Rename the `SEP16_WEST_COAST` activity to
-   `West Coast Exploration, Darling Flower Show, Braai & Beach Sunset`; keep its
-   rates at ZAR 2,500 / USD 150 / UGX 540,000, `default_selected` as `TRUE`, and
-   `active` as `TRUE`.
-2. Add a row with these values (match them to the existing header names):
-
-   | activity_id | activity_date | activity_name | rate_zar | rate_usd | rate_ugx | default_selected | active | activity_type | optional |
-   |---|---|---|---:|---:|---:|---|---|---|---|
-   | SEP16_QUAD_BIKING | 2026-09-16 | Quad Biking in a Nature Reserve | 900 | 55 | 198000 | FALSE | TRUE | Optional | TRUE |
-
-The receiver recognizes `SEP16_QUAD_BIKING` as optional even if the catalog does not
-yet have the last two columns, but the activity row itself must exist and be active.
+The receiver continues to support the LinkedIN profiles directory from version 5.
