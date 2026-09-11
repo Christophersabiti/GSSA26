@@ -1,7 +1,7 @@
 /* Shared gallery uploader for both static entry points. */
 (() => {
   const folder = 'https://drive.google.com/drive/folders/1PMlwA8EriPjg7OmfKvftVEdtlxUf18Ed';
-  const endpoint = 'https://script.google.com/macros/s/AKfycbxz2yfHC5bt8V1lG4faZBQ6Y6kKNTo-iPiTM-BUgik5_mjNohBnfiwUE0cyy27fA9FR/exec';
+  const endpoint = 'https://script.google.com/macros/s/AKfycbzWlRrTXYCSJ8Vnep7dCTDmxRdrebe5FjMtdgQ6T4Eck8-IbaZBMR7EilQSNHFHwokR/exec';
   const section = document.createElement('section');
   section.id = 'photos'; section.className = 'block'; section.setAttribute('aria-labelledby', 'photosTitle');
   section.innerHTML = `<div class="wrap"><div class="eyebrow">OUR CAPE TOWN MEMORIES</div><h2 class="h2" id="photosTitle">Share your photos</h2><p class="sub">Choose your favourite moments from your gallery and add them to our shared trip album. Everyone is welcome—no registration needed.</p><div class="photo-box"><label class="photo-picker" for="photoFiles"><span aria-hidden="true" style="font-size:36px">＋</span><strong>Choose photos from your gallery</strong><span>Or drop photos here on a computer</span><span>JPG, PNG, WebP, GIF or HEIC · Up to 10 photos, 10 MB each</span></label><input id="photoFiles" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif,.heic,.heif" multiple><p>Only share photos you have permission to share. They will be saved in the shared trip folder.</p><ul id="photoQueue" aria-label="Selected photos"></ul><button class="submit" id="uploadPhotos" type="button" disabled>Upload photos</button><p id="photoStatus" role="status" aria-live="polite">Choose photos to get started.</p><a href="${folder}" target="_blank" rel="noopener noreferrer">View shared album ↗</a></div></div>`;

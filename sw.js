@@ -1,4 +1,4 @@
-const CACHE_NAME='gssa-2026-v4';
+const CACHE_NAME='gssa-2026-v5';
 const APP_SHELL=['./','./index.html','./photo-upload.js','./manifest.webmanifest','./PMI-Logo-Uganda.png','./app-icon.png'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_SHELL)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE_NAME).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));

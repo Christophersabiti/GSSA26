@@ -34,7 +34,7 @@ The receiver continues to support the LinkedIN profiles directory from version 5
 
 ## Photo uploads (receiver version 7)
 
-The **Upload photos** tab sends images to the same receiver, which saves them in
+The **Upload photos** tab sends images to its dedicated receiver, which saves them in
 Drive folder `1PMlwA8EriPjg7OmfKvftVEdtlxUf18Ed`. Deploy the updated `Code.gs`
 as a new version of the existing web app, executing as the owner with access set
 to Anyone. The deploying account must have permission to add files to this folder.
@@ -50,3 +50,9 @@ by its image signature. The client allows 10 photos per batch. Uploads require a
 internet connection; unsubmitted selections are not persisted after leaving the page.
 The receiver is public and consumes the owner's Drive storage and Apps Script quota;
 monitor usage and disable the photo handler if unwanted submissions occur.
+
+Photo receiver URL (configured in `photo-upload.js`):
+`https://script.google.com/macros/s/AKfycbzWlRrTXYCSJ8Vnep7dCTDmxRdrebe5FjMtdgQ6T4Eck8-IbaZBMR7EilQSNHFHwokR/exec`
+
+Deploy version 7 of `Code.gs` to this photo receiver. Its `/exec` response must
+include `photo_uploads: true`. The registration endpoint in `index.html` is separate.
