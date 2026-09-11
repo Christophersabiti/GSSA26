@@ -29,7 +29,7 @@ function doGet(e) {
     const sheet = getConnectionsSheet_(SpreadsheetApp.openById(SPREADSHEET_ID));
     return jsonResponse_({ ok: true, connections: sheet ? readConnections_(sheet) : [] });
   }
-  return jsonResponse_({ ok: true, service: 'GSSA 2026 multi-activity receiver', version: 6 });
+  return jsonResponse_({ ok: true, service: 'GSSA 2026 multi-activity receiver', version: 7, photo_uploads: true });
 }
 
 function doPost(e) {
@@ -37,6 +37,7 @@ function doPost(e) {
 
   try {
     const payload = parsePayload_(e);
+    if (payload.record_type === 'photo') return savePhoto_(payload, lock);
     if (payload.record_type === 'connection') return saveConnection_(payload, lock);
     validateParticipant_(payload);
     lock.waitLock(15000);
@@ -320,4 +321,31 @@ function safeCellValue_(value) {
 function jsonResponse_(body) {
   return ContentService.createTextOutput(JSON.stringify(body))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// Public uploads are limited to supported image signatures and 10 MB per file.
+function savePhoto_(payload, lock) {
+  const id = String(payload.upload_id || '');
+  if (!/^[0-9a-f-]{36}$/i.test(id)) throw new Error('Invalid upload identifier.');
+  const data = String(payload.data || '');
+  if (!data || data.length > 13981016 || !/^[A-Za-z0-9+/]*={0,2}$/.test(data)) throw new Error('Photo must be under 10 MB.');
+  const bytes = Utilities.base64Decode(data);
+  if (!bytes.length || bytes.length > 10485760) throw new Error('Photo must be under 10 MB.');
+  const head = bytes.slice(0, 16).map(function(b){return (b + 256) % 256;});
+  const ascii = head.map(function(b){return String.fromCharCode(b);}).join('');
+  let mime, extension;
+  if (head[0] === 255 && head[1] === 216 && head[2] === 255) { mime = 'image/jpeg'; extension = 'jpg'; }
+  else if (head.slice(0,8).join(',') === '137,80,78,71,13,10,26,10') { mime = 'image/png'; extension = 'png'; }
+  else if (/^GIF8[79]a/.test(ascii)) { mime = 'image/gif'; extension = 'gif'; }
+  else if (ascii.slice(0,4) === 'RIFF' && ascii.slice(8,12) === 'WEBP') { mime = 'image/webp'; extension = 'webp'; }
+  else if (ascii.slice(4,8) === 'ftyp' && /^(heic|heix|hevc|hevx|mif1|msf1)$/.test(ascii.slice(8,12))) { mime = 'image/heic'; extension = 'heic'; }
+  else throw new Error('Unsupported image. Choose JPG, PNG, WebP, GIF or HEIC.');
+  lock.waitLock(15000);
+  const folder = DriveApp.getFolderById('1PMlwA8EriPjg7OmfKvftVEdtlxUf18Ed');
+  // A stable server-controlled name makes retries safe after a lost response.
+  const filename = 'GSSA-' + id + '.' + extension;
+  const existing = folder.getFilesByName(filename);
+  if (existing.hasNext()) return jsonResponse_({ok:true, file_id:existing.next().getId()});
+  const file = folder.createFile(Utilities.newBlob(bytes, mime, filename));
+  return jsonResponse_({ok:true, file_id:file.getId()});
 }

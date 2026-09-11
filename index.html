@@ -212,6 +212,7 @@ th{background:#f3effb;font-size:12px;text-transform:uppercase;letter-spacing:.4p
     </div>
     <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mainNav" aria-label="Open navigation">&#9776;</button>
     <nav class="links" id="mainNav" aria-label="Main navigation">
+      <a href="#photos">Upload photos</a>
       <a href="#album">Excursions</a>
       <a href="https://events.pmi.org/flow/pmi/gsscapetown26/sessions/page/sessions?tab.all=1771429223221001tuq6" target="_blank" rel="noopener noreferrer">Sessions &nearr;</a>
       <a href="#connect">Connect</a>
@@ -796,5 +797,6 @@ if(location.hash==='#admin'){ document.getElementById('admin').classList.add('sh
 window.addEventListener('hashchange',()=>{ if(location.hash==='#admin'){ document.getElementById('admin').classList.add('show'); document.getElementById('admin').scrollIntoView(); }});
 renderAdmin();
 </script>
+<script src="photo-upload.js"></script>
 </body>
 </html>
