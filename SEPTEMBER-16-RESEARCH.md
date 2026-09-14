@@ -1,91 +1,82 @@
-# September 16 experience research and implementation brief
+# Winelands to the Waves
 
-## Confirmed programme and prices
+## Programme and commercial basis
 
-Wednesday, 16 September 2026 is the shared Western Cape experience day. The organiser-supplied package is **USD120 per person**, including an ancient tea ritual experience, wine tasting, Lunch & Surprise, and transport. These supplied rates are the programme’s authority; unrelated public operator rates do not replace them.
+Wednesday, 16 September 2026. Departure: **09:00 AM**, Cape Town local time. The revised organiser programme runs **Spier Wine Farm → Tokara → Babylonstoren → Happy Folks, Big Bay**. This replaces the earlier tea ritual, lunch-and-surprise programme and its buggy, quad and horse-riding extras. The only newly authorised optional extra is the **Segway Wine Tour at R950 / USD60 per person**.
 
-| Selection | ZAR per person | USD per person | Status |
+The existing **USD120 base allocation is retained provisionally**, pending reconfirmation for this changed itinerary. The latest programme does not supply a replacement base price or a base ZAR amount. USD150 describes payments already made by some participants; it is not the revised package price. No individual venue prices should be added to the participant total for services already included in the package.
+
+| Component | Allocated ZAR | Allocated USD | Treatment |
 |---|---:|---:|---|
-| Ancient tea ritual, wine tasting, Lunch & Surprise, transport | To be confirmed | 120 | Compulsory |
-| Buggy ride | 700 | 45 | Optional |
-| Quad biking | 950 | 60 | Optional |
-| Horse riding, 30 minutes | 550 | 35 | Optional; choose one duration |
-| Horse riding, 1 hour | 750 | 48 | Optional; choose one duration |
-| Horse riding, 1.5 hours | 850 | 55 | Optional; choose one duration |
+| Revised full-day package | To be confirmed | 120 provisional | Existing allocation; reconfirm with organiser |
+| Segway Wine Tour | 950 | 60 | Optional, selected separately |
+| Package plus Segway | Full total unconfirmed | 180 provisional | Subject to base-price reconfirmation |
+| Earlier payment | Not supplied | 150 | Individual payment reconciliation |
 
-No ZAR price was supplied for the compulsory package. A derived rand price would introduce a new commercial assumption. Therefore, main and combined ZAR totals remain unconfirmed. Optional ZAR totals are available. The existing UGX display uses 3,600 UGX per USD as an indicative planning conversion, not a verified live exchange rate. The USD120 package therefore displays an indicative UGX432,000.
+The website’s existing indicative conversion is UGX3,600 per USD. On this planning basis, the provisional base is UGX432,000; Segway is UGX216,000; together they are UGX648,000. This is not a live exchange-rate quote. R950 and USD60 are the organiser’s two allocated prices; they should not be silently recalculated from an exchange rate.
 
-The former flower show, braai, beach sunset and USD150 package have been removed from current September 16 cards and details. The supplied screenshot and repository’s older itinerary image document the previous programme; they do not override the revised instructions.
+For someone who paid USD150, a confirmed USD120 base with no extra would imply a USD30 difference; adding the USD60 Segway would instead imply USD30 still due. These are conditional arithmetic examples, **not approved refunds or payment demands**. The team will reach out and handle refunds or top-ups case by case. Actual settlement depends on the confirmed base, payment record and agreed extras.
 
-## Tea experience: evidence and limits
+## Included services and allocation limits
 
-The strongest geographically relevant lead is **!Khwa ttu’s San-guided “Tea Tasting — the veld pharmacy.”** Its official tours page describes indigenous plant knowledge and tea tasting with San guides. At access, the public listing showed R275 and 45 minutes. This supports a plausible West Coast cultural tea experience but does not prove that it is the organiser’s booked activity. The participant page retains the requested “ancient tea ritual” name without asserting a specific ceremony, language, medicinal effect or confirmed venue. [1]
+The supplied package includes wine tasting, paired wine tasting, juice tasting, entrance fees, water, dinner at Happy Folks and two hours of gaming there. At Babylonstoren, participants may choose cake or juice in place of wine tasting. This substitution belongs within the package and is not an additional paid excursion.
 
-Other Western Cape tea experiences differ materially. Babylonstoren describes indigenous rooibos and honeybush products and has a herbal-tea workshop listing for **16 February 2027**, at R1,600 with lunch. That listing is not evidence of availability on 16 September 2026. Hazendal’s older corporate brochure describes a Russian tea ceremony, while its newer afternoon-tea menu describes a different dining presentation. Neither establishes the identity of this group’s experience. [2–4]
+The programme does not identify which estate supplies each pairing or juice flight, the number of wines, dinner menu, gaming system, or monetary drinks allowance. The final stop mentions drinks as part of the social experience, but that does not establish unlimited or included bar drinks. Lunch and transport were explicit in the old package; the new inclusion list does not repeat them. Confirm transport/pickup arrangements and daytime food provision rather than carrying those old promises forward automatically.
 
-These distinctions matter for photography and participant expectations. A Japanese or Chinese tea ceremony should not illustrate a San-led experience unless that is the actual booked tradition. The revised page uses a verified photograph of tea service from !Khwa ttu’s tours page and identifies it as illustrative. The organiser still needs to confirm the provider before the itinerary names a venue.
+## Spier Wine Farm
 
-## Wine tasting and the day’s route
+Spier’s official tasting page describes guided flights, seasonal pairings and indoor or terrace settings. Its published entry flight is R105 per person, with other flights at R150 and R220. These are public retail benchmarks, not evidence of the group’s booked flight or internal cost allocation. The programme can confidently describe wine, art and farm spaces without promising a specific premium flight. [1]
 
-Darling Cellars has a public tasting-room listing directing guests to its cellar-door team for current tastings and pairings. This makes Darling a reasonable research lead for a West Coast day, but no tasting estate, wine count, pairing menu or reservation was supplied for September 16. The website therefore promises wine tasting as an inclusion without inventing those details. [5]
+Spier’s farm map connects the tasting area with craft, riverside spaces and historic buildings. It identifies the Old Wine Cellar as dating to 1767. These provide useful themes for the visit: how wine production, built heritage and contemporary creativity coexist on a working estate. Walking and browsing time should be allowed alongside tasting rather than treating the estate as only a drinks stop. [2]
 
-A workable outline is group transport, tea experience, wine tasting, shared lunch and surprise, then return transport. This is a sequence for coordination, not a timed or booked itinerary. Optional activities must be fitted around confirmed transport and provider availability. The surprise remains unspecified as requested; it should not be expanded into an unconfirmed gift, performance or destination.
+## Tokara
 
-A tea visit on the West Coast and adventure activities in the Elgin Valley would involve different travel corridors. Cape Adrenaline explicitly locates its forest buggy and waterfall quad activities in Grabouw’s Elgin Valley, approximately 50 minutes from Cape Town. That operator is evidence of the activities and a photo source, not a confirmed compatible stop on this group’s route. Confirm the actual adventure operator and transit plan before allocating time slots. [6]
+Tokara’s official material locates the estate on the Helshoogte route into the Banghoek Valley and lists tasting-lounge hours of 10:00–18:00, with the last tasting at 17:30. The winery gallery and sculpture garden support the revised focus on wine, art and landscape. [3]
 
-## Optional activities
+The estate’s art-and-gardens page describes African artworks at the winery/restaurant entrance and sculptures along the route toward the delicatessen. A short art walk is therefore a well-supported complement to tasting. Access to every garden area or a private guided art session should not be assumed from a general estate visit. No confirmed Tokara group rate or pairing format was supplied, so no extra participant charge is introduced. [4]
 
-**Buggy ride.** Cape Adrenaline publicly distinguishes buggy adventures from quad biking. Its public prices differ from the organiser’s R700 / USD45, so the page preserves the supplied group price and does not label it the operator’s advertised rate. A side-by-side buggy photograph replaces a generic landscape or quad-only image. No ride duration or seat-sharing basis was supplied; those remain to be confirmed. [6]
+## Babylonstoren
 
-**Quad biking.** The organiser’s updated price is R950 / USD60. The old R900 / USD55 is removed from the card, detail note and callout. The replacement photograph visibly includes a quad bike. The revised title avoids asserting a nature reserve as the actual venue without confirmation. The final operator must supply route, duration and participation requirements. [6]
+The productive garden covers five hectares and draws inspiration from Cape Town’s historic Company’s Garden. It is suitable for notes on fruit, vegetables and Cape agricultural heritage. The official schedule lists a daily 10:00 garden tour and weekday 11:30 collection walks; Wednesday focuses on vegetables, while the Healing Garden walk is listed for Tuesday. The group’s Wednesday afternoon stop should therefore not promise the scheduled guided Healing Garden walk. Self-guided exploration or a specially arranged guide is more consistent with the route. [5]
 
-**Horse riding.** Horse Riding Cape Town lists multiple regional outride options with different locations and public starting prices. This supports the availability of regional horseback experiences but does not verify the organiser’s three quoted duration/rate combinations. The page uses a photographed horseback outride, identifies the image as illustrative and presents exactly the supplied 30-minute, one-hour and 90-minute choices. Selecting a new horse duration replaces the previous one. [7]
+Current visitor information lists adult admission at R190 and requests advance notice for buses. Garden and Healing Garden audio tours are available through the estate app. Gravel and peach-pip paths warrant comfortable footwear and a check on accessibility needs. Entrance fees are already included in the organiser programme, so this public R190 amount is contextual, not a surcharge. [6]
 
-Public listings do not establish September 16 capacity, transport compatibility, group discounts or a reservation. No booking was made as part of this update.
+Wine tasting is listed daily from 10:00–18:00. The separate two-hour cellar tours require booking; they should not be added to a garden-and-tasting stop without an explicit arrangement. The organiser’s cake-or-juice alternative is preserved exactly, but its venue redemption process, portion and availability remain group arrangements to confirm. [7]
 
-## Selection and registration behavior
+## Happy Folks, Big Bay
 
-The compulsory package is present by default and cannot be removed. Buggy riding and quad biking are independent extras, initially unselected. Horse riding is optional, initially unselected, with a maximum of one duration. A participant can remove any selected optional activity.
+The official Blouberg listing places Happy Folks at Shop 57C, Eden on the Bay, Big Bay, and advertises outdoor seating and games. The shopping centre’s tenant page describes ocean and Table Mountain views, food, drinks and interactive games. It lists Wednesday kitchen closing at 22:30 and bar closing at 23:00. This supports the dinner-and-social finish. It does not confirm a group reservation, a two-hour gaming price or the exact games available. [8–9]
 
-Main and optional totals remain separate in the selection panel and trip bar. Examples:
+Preserve the organiser’s dinner and two-hour gaming inclusions, and confirm whether the gaming window begins at arrival or after dinner. Sunset views depend on arrival, seating and weather; avoid guaranteeing a visible sunset or inventing an exact sunset time. Book enough space for the group and settle menu, dietary requests and bar-payment arrangements in advance.
 
-| Selected September 16 activities | Main USD | Optional USD | Combined USD | Optional ZAR |
-|---|---:|---:|---:|---:|
-| Package only | 120 | 0 | 120 | 0 |
-| Package + buggy | 120 | 45 | 165 | 700 |
-| Package + quad | 120 | 60 | 180 | 950 |
-| Package + 30-minute horse ride | 120 | 35 | 155 | 550 |
-| Package + one-hour horse ride | 120 | 48 | 168 | 750 |
-| Package + 90-minute horse ride | 120 | 55 | 175 | 850 |
-| Package + buggy + quad + 90-minute horse ride | 120 | 160 | 280 | 2,500 |
+## Segway and route feasibility
 
-The receiver calculates prices from trusted server-side catalog data, rather than accepting client-supplied totals. Version 6 includes the new September 16 catalog, preserves the stable main activity ID, adds missing compulsory selection, rejects multiple horse durations, and distinguishes all optional IDs. Missing package ZAR is represented as null rather than zero. Historic registrations are not rewritten.
+Spier publicly lists a two-hour Wine Farm & Vineyards Glide at **R950**, including a Signature tasting, at **09:00 only**, with at least four guests. Its stated rider conditions include being over 10, under 120 kg, and not pregnant. [10] The tour operator independently lists the R950 Farm & Vineyard Tour with wine tasting and asks guests to allow **2.5–3 hours** overall. [11]
 
-The website and Apps Script receiver need coordinated deployment. Publishing only the website against the old receiver could reject new optional IDs or apply outdated rates. The prepared source is local; the live website and Apps Script deployment have not been changed.
+This is the strongest match to the organiser’s Segway name and rand price, but it is not proof of the booked product. Its public start overlaps the group’s 09:00 departure. Unless departure is from Spier itself, the published slot is incompatible. Retain the supplied extra and price, but confirm a later/private slot or separate transfer before assigning times or collecting an extra payment on the assumption that it fits.
 
-## Photograph register
+The four-stop sequence is the organiser’s route, not a verified driving schedule. The pickup point, group size, loading times and tasting reservations are unknown. Three estates followed by a coastal dinner needs a timed transport plan, especially if Segway adds up to three hours. Reserve the non-Segway group’s activity in the same window, protect Babylonstoren arrival before closing and plan the final transfer around the intended coastal arrival. No precise transit estimate is justified until the starting location and reservations are known.
 
-| Subject | Source | Representation |
-|---|---|---|
-| Tea service | !Khwa ttu official tours and trails page | Real photographed tea service; illustrative venue |
-| Buggy | Cape Adrenaline official website | Side-by-side buggy with riders; illustrative operator |
-| Quad biking | Cape Adrenaline official website | Photograph containing a quad and buggy; illustrative operator |
-| Horse riding | Horse Riding Cape Town official website | Mounted rider on an outride; illustrative route |
+## Implementation and remaining confirmations
 
-The photographs were visually inspected. Their original URLs are recorded in `images/SOURCES.json`; local copies are bundled for reliable loading and source credits appear in the detail view. These operator photographs are not labelled Creative Commons. Provider confirmation and permission to reuse the photos should be settled before public release; attribution alone does not establish a licence.
+The participant site now presents one compulsory package and one separately selectable Segway extra. The base retains the stable `SEP16_WEST_COAST` identifier so historic references remain usable. New Segway selections use `SEP16_SEGWAY_WINE_TOUR`. The revised receiver excludes old September 16 catalog entries before applying the new authoritative catalog, preventing retired extras from remaining selectable through old requests. Historic registration rows are not rewritten.
 
-## Items for organiser confirmation
+The provisional USD120 is consistent across the page, JSON catalog and receiver. Main and optional totals remain separate; combined ZAR remains unconfirmed because the base ZAR allocation is absent. The old activity photographs have been replaced on September 16 cards by an original route illustration, avoiding pictures of activities no longer offered.
 
-Confirm the tea provider and tradition; wine estate and tasting format; lunch arrangements and dietary needs; group transport pickup and return details; adventure provider, timetable and buggy seat basis; horse-riding suitability and availability; and the ZAR price for the package if a full rand total is needed. These are unresolved booking details, not reasons to change the supplied prices.
+Before publication, reconfirm the base price; pickup/return transport and daytime food; tasting and substitution arrangements; accessible garden routes; Happy Folks dinner, drinks and gaming terms; and a Segway slot compatible with departure. Website and Apps Script receiver changes need coordinated deployment. Deployment does not book venues, rewrite historic registrations or issue refunds.
 
 ## Sources
 
-Accessed 10 September 2026. Where sources lack a publication date, only the access date is asserted.
+Official sources accessed 14 September 2026. Public rates and schedules are reference information, not booking confirmations. Organiser programme: revised “PMI UGANDA | WINELANDS TO THE WAVES” announcement supplied for this update. Previous allocation: the existing local September 16 catalog, USD120.
 
-1. !Khwa ttu. [Tours & Trails — San Guided Tours](https://www.khwattu.org/visit-and-explore/tours-and-trails/). Official operator description, tea duration and public price; official photographs.
-2. Babylonstoren. [Tea](https://babylonstoren.com/tea) and [Join us for healing herbal tea](https://babylonstoren.com/workshops/join-us-for-herbal-tea). Tea context; workshop explicitly dated 16 February 2027.
-3. Hazendal. [Corporate year-end specials](https://www.hazendal.co.za/wp-content/uploads/2021/09/HAZENDAL-EVENT-PACKAGES.pdf). Historic Russian-tea offering; unsuitable as proof of current group booking or pricing.
-4. Hazendal. [Mark’s Afternoon Tea](https://www.hazendal.co.za/wp-content/uploads/2025/12/Hazendal-Wine-Estate-Marks-Afternoon-Tea.pdf). Tea menu; does not identify the group’s booked experience.
-5. Darling Cellars / wine.co.za. [Tasting Room at Darling Cellars](https://tour.wine.co.za/taste/taste.aspx?TASTEID=881). Cellar-door tasting lead and contact direction.
-6. Cape Adrenaline. [Quad Biking & Buggy Adventures near Cape Town](https://www.capeadrenaline.com/). Official activity descriptions, Elgin location, public prices and photographs.
-7. Horse Riding Cape Town. [Horse Riding Cape Town](https://horseridingcapetown.com/). Official regional outride options and photograph.
+1. Spier. [Wine Tasting](https://www.spier.co.za/visit/wine-tasting). Tasting formats and public prices.
+2. Spier. [Farm Map 2025](https://www.spier.co.za/wp-content/uploads/2025/07/Spier-Farm-Map-2025.pdf). Farm layout and heritage context; dated map, not a current booking schedule.
+3. Tokara. [Art](https://www.tokara.com/art/). Tasting hours, location and gallery context.
+4. Tokara. [Art and Gardens](https://www.tokara.com/tokara-wine-estate/tokara-art-and-gardens/). Gallery and sculpture route.
+5. Babylonstoren. [Visit Our Garden](https://babylonstoren.com/visit-our-garden). Garden history and weekday tour schedule.
+6. Babylonstoren. [Visitor Information](https://babylonstoren.com/visitor-information). Admission, bus notice, audio tours and paths.
+7. Babylonstoren. [Contact and Opening Times](https://babylonstoren.com/contact). Wine-tasting and cellar-tour hours.
+8. Happy Folks. [Blouberg](https://happyfolks.co.za/stores-blouberg.php). Venue address and amenities.
+9. Eden on the Bay. [Happy Folks](https://www.edenonthebaymall.co.za/happy-folks/). Coastal setting, games and operating hours.
+10. Spier. [Segway Vineyard Tour](https://www.spier.co.za/visit/segway-vineyard-tour/). R950 product, start time and rider conditions.
+11. Segway Vineyard Tours. [Official tour listings](https://segwaytours.co.za/). R950 product and overall time allowance.

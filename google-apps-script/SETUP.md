@@ -21,12 +21,12 @@ Google Sheets cannot receive a website form submission directly. Deploy the incl
 7. Deploy and approve access. Keep the URL ending in `/exec`.
 8. Confirm that URL matches `CONFIG.FORM_ENDPOINT` in `index.html`.
 9. Open the `/exec` URL in a browser and confirm the response reports
-   `"service":"GSSA 2026 multi-activity receiver"` and `"version":6`. If it does
+   `"service":"GSSA 2026 multi-activity receiver"` and `"version":8`. If it does
    not, edit the existing deployment again and select **New version**.
 
-The version 6 receiver enforces the compulsory September 16 package and allows at most one horse-riding duration. It computes main and optional totals separately from trusted rates. The September 16 rates in `SEP16_CATALOG` override stale spreadsheet entries and include all new options. Other days continue to use Activity Catalog.
+The version 8 receiver enforces the compulsory September 16 package and offers the Segway Wine Tour as the only September 16 optional extra. It computes main and optional totals separately from trusted rates. The September 16 rates in `SEP16_CATALOG` override stale spreadsheet entries and include all new options. Other days continue to use Activity Catalog.
 
-Deploy this receiver together with the website. Confirm the `/exec` response reports version 6 before accepting registrations for the new options. The main package has no supplied ZAR price: its rate and any combined ZAR total remain blank/null, while USD and indicative UGX totals remain complete. Never interpret that blank as a free package.
+Deploy this receiver together with the website. Confirm the `/exec` response reports version 8 before accepting registrations for the new options. The main package has no supplied ZAR price: its rate and any combined ZAR total remain blank/null, while USD and indicative UGX totals remain complete. Never interpret that blank as a free package.
 
 `sep16-catalog.json` contains the exact matching catalog rows for reference. Existing historical registration rows are unchanged. The stable `SEP16_WEST_COAST` ID is retained for compatibility; its current title and price are replaced.
 
@@ -39,8 +39,7 @@ Drive folder `1PMlwA8EriPjg7OmfKvftVEdtlxUf18Ed`. Deploy the updated `Code.gs`
 as a new version of the existing web app, executing as the owner with access set
 to Anyone. The deploying account must have permission to add files to this folder.
 Approve the newly required Google Drive permission during deployment. Confirm the
-`/exec` response has `version: 7` and `photo_uploads: true`. Version 7 retains all
-version 6 registration behavior. Visitors do not need a Google account to upload.
+`/exec` response has `version: 8` and `photo_uploads: true`. Version 8 retains photo-upload and directory behavior. Visitors do not need a Google account to upload.
 Folder viewing still follows its existing Drive sharing permissions.
 
 Verify with a small image from a phone: select, preview, upload, and confirm the
@@ -54,5 +53,5 @@ monitor usage and disable the photo handler if unwanted submissions occur.
 Photo receiver URL (configured in `photo-upload.js`):
 `https://script.google.com/macros/s/AKfycbzWlRrTXYCSJ8Vnep7dCTDmxRdrebe5FjMtdgQ6T4Eck8-IbaZBMR7EilQSNHFHwokR/exec`
 
-Deploy version 7 of `Code.gs` to this photo receiver. Its `/exec` response must
+Deploy version 8 of `Code.gs` to this photo receiver. Its `/exec` response must
 include `photo_uploads: true`. The registration endpoint in `index.html` is separate.

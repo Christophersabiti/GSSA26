@@ -9,9 +9,9 @@ GitHub + Vercel.
 - **Dated excursion itinerary** sourced from `2026 09 _ PMI UGANDA Excursions.pdf`
 - Search and filter the itinerary, then tap any activity for highlights, practical details, itinerary, history and source
 - Assigned ZAR and USD rates plus an indicative UGX conversion on every card
-- 16 September group activity: **Ancient tea ritual, wine tasting, Lunch & Surprise, and transport** (compulsory, USD 120 per person)
-- Separately selectable 16 September optional extra: **Buggy ride** (R700 / USD45), **quad biking** (R950 / USD60), and **horse riding** (30 min R550 / USD35; 1 hr R750 / USD48; 1.5 hr R850 / USD55). Horse durations are mutually exclusive.
-- Multi-select activity planner with a default-selected, removable group activity and separate main-activity and optional-extra computations in ZAR, USD and indicative UGX
+- 16 September: **Winelands to the Waves**, departing 09:00 AM — Spier, Tokara, Babylonstoren and Happy Folks, Big Bay. Existing USD120 base allocation is provisional pending organiser reconfirmation.
+- Optional **Segway Wine Tour: R950 / USD60**. Previous USD150 payments are reconciled case by case; the team will reach out.
+- Multi-select activity planner with a default-selected compulsory group activity and separate main-activity and optional-extra computations in ZAR, USD and indicative UGX
 - **Registration form**: Full name, Email, WhatsApp/Phone, PMI Membership ID,
   Chapter/City and a date-specific excursion choice populated from the itinerary
 - One submission writes a participant record plus separate reportable activity-selection rows, and is backed up in-browser

@@ -4,7 +4,7 @@ const SELECTIONS_SHEET = 'Activity Selections';
 const CATALOG_SHEET = 'Activity Catalog';
 const CONNECTIONS_SHEET = 'LinkedIN profiles';
 const CONNECTIONS_SHEET_ID = 2025739129;
-const SEP16_CATALOG = [{"activity_id": "SEP16_WEST_COAST", "activity_date": "2026-09-16", "activity_name": "Ancient Tea Ritual, Wine Tasting, Lunch & Surprise", "rate_zar": null, "rate_usd": 120, "rate_ugx": 432000, "default_selected": true, "active": true, "activity_type": "Compulsory", "optional": false}, {"activity_id": "SEP16_BUGGY_RIDE", "activity_date": "2026-09-16", "activity_name": "Buggy Ride", "rate_zar": 700, "rate_usd": 45, "rate_ugx": 162000, "default_selected": false, "active": true, "activity_type": "Optional", "optional": true}, {"activity_id": "SEP16_QUAD_BIKING", "activity_date": "2026-09-16", "activity_name": "Quad Biking", "rate_zar": 950, "rate_usd": 60, "rate_ugx": 216000, "default_selected": false, "active": true, "activity_type": "Optional", "optional": true}, {"activity_id": "SEP16_HORSE_30", "activity_date": "2026-09-16", "activity_name": "Horse Riding · 30 minutes", "rate_zar": 550, "rate_usd": 35, "rate_ugx": 126000, "default_selected": false, "active": true, "activity_type": "Optional", "optional": true}, {"activity_id": "SEP16_HORSE_60", "activity_date": "2026-09-16", "activity_name": "Horse Riding · 1 hour", "rate_zar": 750, "rate_usd": 48, "rate_ugx": 172800, "default_selected": false, "active": true, "activity_type": "Optional", "optional": true}, {"activity_id": "SEP16_HORSE_90", "activity_date": "2026-09-16", "activity_name": "Horse Riding · 1.5 hours", "rate_zar": 850, "rate_usd": 55, "rate_ugx": 198000, "default_selected": false, "active": true, "activity_type": "Optional", "optional": true}];
+const SEP16_CATALOG = [{"activity_id": "SEP16_WEST_COAST", "activity_date": "2026-09-16", "activity_name": "Winelands to the Waves", "rate_zar": null, "rate_usd": 120, "rate_ugx": 432000, "default_selected": true, "active": true, "activity_type": "Compulsory", "optional": false}, {"activity_id": "SEP16_SEGWAY_WINE_TOUR", "activity_date": "2026-09-16", "activity_name": "Segway Wine Tour", "rate_zar": 950, "rate_usd": 60, "rate_ugx": 216000, "default_selected": false, "active": true, "activity_type": "Optional", "optional": true}];
 const OPTIONAL_ACTIVITY_IDS = SEP16_CATALOG.filter(function(a){return a.optional;}).map(function(a){return a.activity_id;});
 
 const REGISTRATION_HEADERS = [
@@ -29,7 +29,7 @@ function doGet(e) {
     const sheet = getConnectionsSheet_(SpreadsheetApp.openById(SPREADSHEET_ID));
     return jsonResponse_({ ok: true, connections: sheet ? readConnections_(sheet) : [] });
   }
-  return jsonResponse_({ ok: true, service: 'GSSA 2026 multi-activity receiver', version: 7, photo_uploads: true });
+  return jsonResponse_({ ok: true, service: 'GSSA 2026 multi-activity receiver', version: 8, photo_uploads: true });
 }
 
 function doPost(e) {
@@ -43,7 +43,7 @@ function doPost(e) {
     lock.waitLock(15000);
 
     const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
-    const catalog = loadCatalog_(spreadsheet.getSheetByName(CATALOG_SHEET)).filter(function(a){return !SEP16_CATALOG.some(function(b){return b.activity_id === a.activity_id;});}).concat(SEP16_CATALOG);
+    const catalog = loadCatalog_(spreadsheet.getSheetByName(CATALOG_SHEET)).filter(function(a){return a.activity_date !== '2026-09-16' && !/^SEP16_/.test(a.activity_id);}).concat(SEP16_CATALOG);
     const activities = resolveActivities_(payload, catalog);
     const mainTotals = sumActivities_(activities.filter(function (activity) {
       return !isOptionalActivity_(activity);
@@ -238,7 +238,6 @@ function resolveActivities_(payload, catalog) {
   requested = requested.filter(function (id, index) { return requested.indexOf(id) === index; });
 
   if(requested.indexOf('SEP16_WEST_COAST') === -1) requested.push('SEP16_WEST_COAST');
-  if(requested.filter(function(id){return /^SEP16_HORSE_/.test(id);}).length > 1) throw new Error('Choose only one horse-riding duration.');
   const byId = {};
   catalog.forEach(function (activity) { if (activity.active) byId[activity.activity_id] = activity; });
   const unknown = requested.filter(function (id) { return !byId[id]; });
