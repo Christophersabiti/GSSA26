@@ -1,3 +1,7 @@
+# Retrospectives update
+
+The landing page now collects anonymous journey reflections. Completed pages are accessible from Archive. See [RETROSPECTIVES.md](RETROSPECTIVES.md) for design references, privacy behavior, validation and receiver activation.
+
 # PMI Uganda · Cape Town Journey 2026 (GSSA 2026)
 
 A single-page web app to **capture Ugandan PMI members** joining the Cape Town journey

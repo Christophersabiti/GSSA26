@@ -1,3 +1,7 @@
+# Retrospective receiver update (version 9)
+
+Deploy `Code.gs` as a new version of the existing **registration** receiver, keeping its URL. Verify `version: 9` and `retrospectives: true`. The first reflection creates a `Retrospectives` tab in the same excursion spreadsheet. No identity fields or submission timestamps are saved for reflections. See [../RETROSPECTIVES.md](../RETROSPECTIVES.md). The older receiver notes below describe the preserved excursion features.
+
 # Google Sheets form receiver
 
 The destination spreadsheet is already prepared:

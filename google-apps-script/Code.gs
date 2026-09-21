@@ -29,7 +29,7 @@ function doGet(e) {
     const sheet = getConnectionsSheet_(SpreadsheetApp.openById(SPREADSHEET_ID));
     return jsonResponse_({ ok: true, connections: sheet ? readConnections_(sheet) : [] });
   }
-  return jsonResponse_({ ok: true, service: 'GSSA 2026 multi-activity receiver', version: 8, photo_uploads: true });
+  return jsonResponse_({ ok: true, service: 'GSSA 2026 multi-activity receiver', version: 9, photo_uploads: true, retrospectives: true });
 }
 
 function doPost(e) {
@@ -37,6 +37,7 @@ function doPost(e) {
 
   try {
     const payload = parsePayload_(e);
+    if (payload.record_type === 'retrospective') return saveRetrospective_(payload, lock);
     if (payload.record_type === 'photo') return savePhoto_(payload, lock);
     if (payload.record_type === 'connection') return saveConnection_(payload, lock);
     validateParticipant_(payload);
@@ -347,4 +348,36 @@ function savePhoto_(payload, lock) {
   if (existing.hasNext()) return jsonResponse_({ok:true, file_id:existing.next().getId()});
   const file = folder.createFile(Utilities.newBlob(bytes, mime, filename));
   return jsonResponse_({ok:true, file_id:file.getId()});
+}
+
+// Only these reflection fields are stored; identity fields in a payload are ignored.
+function saveRetrospective_(payload, lock) {
+  const id = String(payload.submission_id || '');
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) throw new Error('Invalid submission identifier.');
+  const fields = ['went_well', 'lessons_learnt', 'areas_to_improve'];
+  const answers = fields.map(function(field) {
+    if (payload[field] !== undefined && typeof payload[field] !== 'string') throw new Error('Invalid reflection.');
+    const value = (payload[field] || '').trim();
+    if (value.length > 4000) throw new Error('Each answer must be 4,000 characters or fewer.');
+    return value;
+  });
+  if (!answers.some(Boolean)) throw new Error('Please answer at least one prompt.');
+  lock.waitLock(15000);
+  const book = SpreadsheetApp.openById(SPREADSHEET_ID);
+  const sheet = book.getSheetByName('Retrospectives') || book.insertSheet('Retrospectives');
+  const headers = ensureHeaders_(sheet, ['submission_id'].concat(fields));
+  const idColumn = headers.indexOf('submission_id') + 1;
+  if (sheet.getLastRow() > 1) {
+    const found = sheet.getRange(2, idColumn, sheet.getLastRow()-1, 1).createTextFinder(id).matchEntireCell(true).findNext();
+    if (found) return jsonResponse_({ok:true, submission_id:id});
+  }
+  const record = {submission_id:id};
+  fields.forEach(function(field,index){record[field]=answers[index];});
+  ensureRowCapacity_(sheet, 1);
+  const row = headers.map(function(header) {
+    const value = String(record[header] || '');
+    return /^[=+@-]/.test(value) ? "'" + value : value;
+  });
+  sheet.getRange(Math.max(sheet.getLastRow()+1,2),1,1,headers.length).setValues([row]);
+  return jsonResponse_({ok:true, submission_id:id});
 }

@@ -1,7 +1,7 @@
 {
   "name": "PMI Uganda - Cape Town Journey 2026",
   "short_name": "GSSA 2026",
-  "description": "Excursions, sessions, registration and delegate connections for the PMI Uganda Cape Town Journey.",
+  "description": "Anonymous reflections, the journey archive and delegate connections for PMI Uganda GSSA 2026.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

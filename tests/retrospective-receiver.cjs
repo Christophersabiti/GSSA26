@@ -1,0 +1,15 @@
+const vm=require('node:vm'), fs=require('node:fs'),assert=require('node:assert/strict');
+let rows=[], released=0;
+const sheet={getLastRow:()=>rows.length,getLastColumn:()=>rows[0]?.length||0,getMaxRows:()=>100,getMaxColumns:()=>26,setColumnWidths:()=>{},getRange(r,c,n=1,m=1){return {getDisplayValues:()=>Array.from({length:n},(_,i)=>Array.from({length:m},(_,j)=>rows[r-1+i]?.[c-1+j]||'')),setValues(values){values.forEach((row,i)=>{rows[r-1+i]??=[];row.forEach((v,j)=>rows[r-1+i][c-1+j]=v)});return this},setBackground(){return this},setFontWeight(){return this},setHorizontalAlignment(){return this},setWrap(){return this},createTextFinder(id){return{matchEntireCell(){return this},findNext(){return rows.slice(1).some(row=>row[c-1]===id)}}}}}};
+const context={SpreadsheetApp:{openById:()=>({getSheetByName:()=>rows.length?sheet:null,insertSheet:()=>sheet})},LockService:{getScriptLock:()=>({waitLock(){},hasLock:()=>true,releaseLock(){released++}})},ContentService:{MimeType:{JSON:'json'},createTextOutput:data=>({setMimeType:()=>JSON.parse(data)})}};
+vm.createContext(context);vm.runInContext(fs.readFileSync(require('node:path').join(__dirname,'../google-apps-script/Code.gs'),'utf8'),context);
+const send=payload=>context.doPost({postData:{contents:JSON.stringify(payload)}});
+const payload={record_type:'retrospective',submission_id:'11111111-2222-4333-8444-555555555555',went_well:'=IMPORTXML("bad")',email:'must-not-save',full_name:'must-not-save'};
+assert.equal(send(payload).ok,true);assert.equal(rows.length,2);assert.equal(rows[1][1][0],"'");assert(!JSON.stringify(rows).includes('must-not-save'));
+assert.equal(send(payload).ok,true);assert.equal(rows.length,2);
+assert.equal(send({...payload,submission_id:'invalid'}).ok,false);
+assert.equal(send({...payload,went_well:' '}).ok,false);
+assert.equal(send({...payload,went_well:'x'.repeat(4001)}).ok,false);
+assert.equal(send({...payload,went_well:{value:'bad'}}).ok,false);
+assert.equal(context.doGet({}).retrospectives,true);assert.equal(released,6);
+console.log('PASS: sheet creation, headers, privacy allowlist, formula escaping, duplicate retry, input validation, lock release, capability check.');
