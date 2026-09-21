@@ -37,5 +37,7 @@
   window.addEventListener('beforeunload',event=>{if(busy||fields.some(field=>field.value.trim())){event.preventDefault();event.returnValue='';}});
   if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
   // Keep existing shared links useful after changing the landing page.
-  if(['#album','#register','#photos','#updates','#connect','#support','#admin'].includes(location.hash)) location.replace('journey.html'+location.hash);
+  const movedPages={'#connect':'connect.html','#support':'support.html','#photos':'gallery.html','#gallery':'gallery.html'};
+  if(movedPages[location.hash])location.replace(movedPages[location.hash]);
+  else if(['#album','#register','#photos','#updates','#connect','#support','#admin'].includes(location.hash)) location.replace('journey.html'+location.hash);
 })();

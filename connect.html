@@ -1,0 +1,25 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#32204d"><title>Connect · PMI Uganda GSSA 2026</title><link rel="icon" href="app-icon.png"><link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="retrospectives.css"><link rel="stylesheet" href="community.css"></head><body><a class="skip" href="#main">Skip to content</a><header><div class="shell top"><a class="brand" href="index.html"><img src="PMI-Logo-Uganda.png" alt="PMI Uganda Chapter"><span>Cape Town Journey<small>GSSA 2026 · 9–19 September</small></span></a><nav aria-label="Main navigation"><a href="index.html">Retrospectives</a><a href="archive.html" >Archive</a><a href="connect.html" aria-current="page">Connect</a><a href="support.html">Support</a></nav></div></header><div class="shell back-row"><a class="back-button" href="index.html">← Back to Retrospective</a></div><main id="main"><section class="block connect-block" id="connect" aria-labelledby="connectTitle">
+  <div class="wrap">
+    <span class="eyebrow">Meet the delegation</span>
+    <div class="connect-head">
+      <div>
+        <h1 class="page-title" id="connectTitle">Keep the connections going.</h1>
+        <p class="sub">Add your public LinkedIn profile so fellow delegates can recognise you and connect directly.</p>
+      </div>
+      <span class="connect-count" id="connectCount" aria-live="polite">0 people connecting</span>
+    </div>
+    <div class="connect-layout">
+      <form class="connect-form" id="connectForm">
+        <h3>Add your LinkedIn profile</h3>
+        <p>Paste your public profile link. We will create your card from the social metadata LinkedIn makes available.</p>
+        <div class="field">
+          <label for="linkedinUrl">LinkedIn profile URL <span class="req">*</span></label>
+          <input id="linkedinUrl" name="linkedin_url" type="url" inputmode="url" autocomplete="url" required placeholder="https://www.linkedin.com/in/your-name" />
+        </div>
+        <button class="submit" id="connectSubmit" type="submit">Generate my profile card</button>
+        <div class="connect-msg" id="connectMsg" role="status"></div>
+      </form>
+      <div class="connect-grid" id="connectGrid" aria-live="polite"></div>
+    </div>
+  </div>
+</section></main><footer class="shell footer"><span>PMI Uganda Chapter · Cape Town Journey 2026</span><a href="archive.html">Revisit the journey ↗</a></footer><script src="connect.js"></script><script>if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});</script></body></html>
